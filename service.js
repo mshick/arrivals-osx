@@ -16,6 +16,9 @@ function create(dirName) {
         runAsUserAgent: true,
         script: path.resolve(__dirname, 'index.js'),
         env: [{
+            name: 'CWD',
+            value: process.env['CWD']
+        }, {
             name: 'WATCH_PATH',
             value: process.env['WATCH_PATH']
         }, {

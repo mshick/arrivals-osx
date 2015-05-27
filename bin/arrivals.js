@@ -13,14 +13,13 @@ var svc;
 var action = argv._[0] || 'run';
 
 if (action === 'uninstall' || action === 'restart' || action === 'stop') {
-    console.log(argv._);
-    // svc = service.create(argv._[1]);
-    // return svc[action]();
+    svc = service.create(argv._[1]);
+    return svc[action]();
 }
 
 assert(argv.destination || (argv['video-destination'] && argv['audio-destination']), 'Destination is required');
 
-var cwd = process.cwd();
+var cwd = argv.cwd || process.cwd();
 var watch = argv.watch || cwd;
 
 if (watch) {
@@ -81,6 +80,7 @@ mkdirp.sync(process.env['TMP_PATH']);
 mkdirp.sync(process.env['DB_PATH']);
 touch.sync(process.env['LOG_FILE']);
 
+process.env['CWD'] = cwd;
 process.env['FFMPEG_PATH'] = argv.ffmpeg || '/usr/local/bin/ffmpeg';
 process.env['MKVTOMP4_PATH'] = argv.mkvtomp4 || '/usr/local/bin/mkvtomp4';
 process.env['MP4BOX_PATH'] = argv.mp4box || '/usr/local/bin/mp4box';
