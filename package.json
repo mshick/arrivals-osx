@@ -1,6 +1,6 @@
 {
   "name": "arrivals-osx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Watch a folder for audio and video arrivals and convert them to Apple-friendly formats.",
   "main": "./lib/arrivals.js",
   "scripts": {
@@ -12,6 +12,22 @@
   "engines" : {
     "iojs" : ">=2.0.0"
   },
+  "keywords": [
+    "mac",
+    "osx",
+    "daemon",
+    "filesystem",
+    "mkv",
+    "mp4",
+    "alac",
+    "conversion",
+    "transcode",
+    "torrents",
+    "watch",
+    "video",
+    "audio",
+    "queue"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
