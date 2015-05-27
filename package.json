@@ -1,6 +1,6 @@
 {
   "name": "arrivals-osx",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Watch a folder for audio and video arrivals and convert them to Apple-friendly formats.",
   "main": "./lib/arrivals.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "audio",
     "queue"
   ],
-  "author": "",
+  "author": "Michael Shick",
   "license": "ISC",
   "dependencies": {
     "bole": "^2.0.0",
