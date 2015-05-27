@@ -1,10 +1,10 @@
 var reach = require('hoek').reach;
 
 var defaults = {
-  'baseDir': './.cava',
+  'baseDir': './.arrivals',
   'dbDir': 'db',
   'tmpDir': 'tmp',
-  'logFile': 'cava.log',
+  'logFile': 'arrivals.log',
   'extensions': ['flac', 'mp3', 'mp4', 'm4a', 'm4v', 'mkv', 'mov'],
   'copyAudioExtensions': ['mp3', 'm4a', 'm4b'],
   'convertAudioExtensions': ['flac'],
