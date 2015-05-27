@@ -59,16 +59,16 @@ $ arrivals --watch=incoming --destination=converted --ffmpeg=/usr/local/bin/ffmp
 
 ## How it works
 
-1 Launches watcher for a directory
-2 Builds existing paths database
-3 When events occur, evaluate against criterion
+1. Launches watcher for a directory
+2. Builds existing paths database
+3. When events occur, evaluate against criterion
     - is correct event
     - is proper extension
     - is not in existing paths db
-4 Push to work queue
-5 Tag with "pending" for Finder*
-6 Do work, either mkvtomp4 or ffmpeg
-7 Tag with "finished" or "error" for Finder*
+4. Push to work queue
+5. Tag with "pending" for Finder*
+6. Do work, either mkvtomp4 or ffmpeg
+7. Tag with "finished" or "error" for Finder*
 
 > * Tagging is forthcoming
 
