@@ -8,7 +8,7 @@ function create(dirName) {
         dirName = process.env['WATCH_PATH'].toLowerCase().replace('/', '').replace(/\//g, ':');
     }
 
-    var name = 'arrivals::' + process.env['WATCH_PATH'].toLowerCase().replace('/', '').replace(/\//g, ':');
+    var name = 'arrivals::' + dirName;
 
     var service = new Service({
         name: name,

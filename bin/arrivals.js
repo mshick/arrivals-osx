@@ -13,8 +13,9 @@ var svc;
 var action = argv._[0] || 'run';
 
 if (action === 'uninstall' || action === 'restart' || action === 'stop') {
-    svc = service.create(argv._[1]);
-    return svc[action]();
+    console.log(argv._);
+    // svc = service.create(argv._[1]);
+    // return svc[action]();
 }
 
 assert(argv.destination || (argv['video-destination'] && argv['audio-destination']), 'Destination is required');
