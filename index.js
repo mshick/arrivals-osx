@@ -1,1 +1,1 @@
-require('./lib/cava')();
+require('./lib/arrivals')();
