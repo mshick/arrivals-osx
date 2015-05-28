@@ -1,5 +1,7 @@
 var path = require('path');
 var Service = require('node-mac').Service;
+var bole = require('bole');
+var log = bole('service');
 
 
 function create(options) {
@@ -57,22 +59,30 @@ function create(options) {
     });
 
     service.on('install', function() {
-        console.log('Installing...');
+        log.info('Installing...');
         service.start();
     });
 
+    service.on('start', function() {
+        log.info('Started!');
+    });
+
     service.on('uninstall', function() {
-        console.log('Uninstall complete');
-        console.log('Service status:', service.exists);
+        log.info('Uninstalling...');
+        if (!service.exists) {
+            log.info('Uninstalled');
+        } else {
+            log.error('Service could not be uninstalled')
+        }
     });
 
     service.on('restart', function() {
-        console.log('Restarting...');
+        log.info('Restarting...');
     });
 
     service.on('stop', function() {
         if (!service.exists) {
-            console.log('Stopped');
+            log.info('Stopped');
         }
     });
 
