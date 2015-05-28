@@ -2,7 +2,9 @@
 
 var path = require('path');
 var mkdirp = require('mkdirp');
+var untildify = require('untildify');
 var touch = require('touch');
+var del = require('del');
 var argv = require('minimist')(process.argv.slice(2));
 var service = require('../service');
 var assert = require('hoek').assert;
@@ -10,87 +12,81 @@ var arrivals = require('../lib/arrivals');
 var config = require('../config');
 var svc;
 
-var action = argv._[0] || 'run';
+const ACTION = argv._[0] || 'run';
+const RUN_AS_ROOT = argv['run-as-root'] || false;
+const CWD = argv.cwd || process.cwd();
+const HOME_DIR = untildify('~/');
+const BASE_DIR = config.get('baseDir');
 
-if (action === 'uninstall' || action === 'restart' || action === 'stop') {
-    svc = service.create(argv._[1]);
-    return svc[action]();
+
+if (ACTION === 'uninstall' || ACTION === 'restart' || ACTION === 'stop') {
+    svc = service.create({ runAsUserAgent: !RUN_AS_ROOT });
+    svc[ACTION]();
+    return;
+}
+
+function prepareDirs(reset) {
+    if (reset) {
+        del.sync([
+            process.env['TMP_PATH'],
+            process.env['DB_PATH'],
+            process.env['LOG_FILE']
+        ], { force: true });
+    }
+
+    mkdirp.sync(process.env['TMP_PATH']);
+    mkdirp.sync(process.env['DB_PATH']);
+    touch.sync(process.env['LOG_FILE']);
+}
+
+function setEnvPath(key, val, defaultVal) {
+    if (val) {
+        if (path.isAbsolute(val)) {
+            process.env[key] = val;
+        } else {
+            process.env[key] = path.resolve(CWD, val);
+        }
+    } else if (defaultVal) {
+        process.env[key] = path.join(HOME_DIR, BASE_DIR, defaultVal);
+    }
+}
+
+setEnvPath('TMP_PATH', argv.tmp, config.get('tmpDir'));
+setEnvPath('DB_PATH', argv.db, config.get('dbDir'));
+setEnvPath('LOG_FILE', argv.log, config.get('logFile'));
+
+if (ACTION === 'reset') {
+    prepareDirs(true);
+    return;
+} else {
+    prepareDirs();
 }
 
 assert(argv.destination || (argv['video-destination'] && argv['audio-destination']), 'Destination is required');
 
-var cwd = argv.cwd || process.cwd();
-var watch = argv.watch || cwd;
+setEnvPath('VIDEO_DESTINATION', argv['video-destination'] || argv['destination']);
+setEnvPath('AUDIO_DESTINATION', argv['audio-destination'] || argv['destination']);
 
-if (watch) {
-    process.env['WATCH_PATH'] = path.resolve(watch);
-}
-
-if (argv.log) {
-    if (path.isAbsolute(argv.log)) {
-        process.env['LOG_FILE'] = argv.log;
-    } else {
-        process.env['LOG_FILE'] = path.resolve(cwd, argv.log);
-    }
+if (argv['log-type']) {
+    process.env['LOG_TYPE'] = argv['log-type'];
 } else {
-    process.env['LOG_FILE'] = path.resolve(watch, config.get('baseDir'), config.get('logFile'));
+    process.env['LOG_TYPE'] = ACTION === 'run' ? 'file' : 'console';
 }
 
-process.env['LOG_TYPE'] = argv['log-type'] || 'file';
+process.env['CWD'] = CWD;
+process.env['WATCH_PATH'] = argv.watch;
 process.env['LOG_LEVEL'] = argv['log-level'] || 'info';
 
-if (argv.tmp) {
-    if (path.isAbsolute(argv.tmp)) {
-        process.env['TMP_PATH'] = argv.tmp;
-    } else {
-        process.env['TMP_PATH'] = path.resolve(cwd, argv.tmp);
-    }
-} else {
-    process.env['TMP_PATH'] = path.resolve(watch, config.get('baseDir'), config.get('tmpDir'));
-}
-
-
-if (argv.db) {
-    if (path.isAbsolute(argv.db)) {
-        process.env['DB_PATH'] = argv.db;
-    } else {
-        process.env['DB_PATH'] = path.resolve(cwd, argv.db);
-    }
-} else {
-    process.env['DB_PATH'] = path.resolve(watch, config.get('baseDir'), config.get('dbDir'));
-}
-
-var videoDestination = argv['video-destination'] || argv['destination'];
-
-if (path.isAbsolute(videoDestination)) {
-    process.env['VIDEO_DESTINATION'] = videoDestination;
-} else {
-    process.env['VIDEO_DESTINATION'] = path.resolve(cwd, videoDestination);
-}
-
-var audioDestination = argv['audio-destination'] || argv['destination'];
-
-if (path.isAbsolute(videoDestination)) {
-    process.env['AUDIO_DESTINATION'] = audioDestination;
-} else {
-    process.env['AUDIO_DESTINATION'] = path.resolve(cwd, audioDestination);
-}
-
-mkdirp.sync(process.env['TMP_PATH']);
-mkdirp.sync(process.env['DB_PATH']);
-touch.sync(process.env['LOG_FILE']);
-
-process.env['CWD'] = cwd;
 process.env['FFMPEG_PATH'] = argv.ffmpeg || '/usr/local/bin/ffmpeg';
 process.env['MKVTOMP4_PATH'] = argv.mkvtomp4 || '/usr/local/bin/mkvtomp4';
 process.env['MP4BOX_PATH'] = argv.mp4box || '/usr/local/bin/mp4box';
 process.env['MKVINFO_PATH'] = argv.mkvinfo || '/usr/local/bin/mkvinfo';
 process.env['MKVEXTRACT_PATH'] = argv.mkvextract || '/usr/local/bin/mkvextract';
 
-if (action === 'run') {
+
+if (ACTION === 'run') {
     arrivals();
-} else if (action === 'install' || action === 'uninstall' || action === 'restart') {
-    process.env['LOG_TYPE'] = 'console';
-    svc = service.create(argv._[1]);
-    svc[action]();
+} else if (ACTION === 'install') {
+    svc = service.create({ runAsUserAgent: !RUN_AS_ROOT });
+    svc.install();
 }

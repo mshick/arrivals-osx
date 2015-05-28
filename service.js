@@ -2,18 +2,14 @@ var path = require('path');
 var Service = require('node-mac').Service;
 
 
-function create(dirName) {
+function create(options) {
 
-    if (!dirName) {
-        dirName = process.env['WATCH_PATH'].toLowerCase().replace('/', '').replace(/\//g, ':');
-    }
-
-    var name = 'arrivals::' + dirName;
+    options = options || {};
 
     var service = new Service({
-        name: name,
+        name: 'arrivals',
         description: 'Arrivals-osx watch process.',
-        runAsUserAgent: true,
+        runAsUserAgent: options.runAsUserAgent,
         script: path.resolve(__dirname, 'index.js'),
         env: [{
             name: 'CWD',
@@ -61,7 +57,7 @@ function create(dirName) {
     });
 
     service.on('install', function() {
-        console.log(dirName);
+        console.log('Installing...');
         service.start();
     });
 
