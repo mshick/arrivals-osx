@@ -81,6 +81,7 @@ $ arrivals --watch=incoming --destination=converted --ffmpeg=/usr/local/bin/ffmp
 
 ```bash
 $ arrivals [command] [--flags]
+```
 
 (All are optional, run is the default)
 
