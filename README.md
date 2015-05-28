@@ -1,6 +1,8 @@
 Arrivals (OSX)
 ==============
 
+![npm release](https://img.shields.io/npm/v/arrivals-osx.svg?style=flat)
+
 Arrivals will watch a directory and convert or copy a variety of incoming
 audio or video files for you then place them somewhere you choose. This only
 works with OSX and the primary use-case is incoming torrents in flac or mkv
@@ -80,7 +82,7 @@ $ arrivals --watch=incoming --destination=converted --ffmpeg=/usr/local/bin/ffmp
 ## Full command list
 
 ```bash
-$ arrivals [command] [--flags]
+$ arrivals [command] [--flag=val]
 ```
 
 (All are optional, run is the default)
@@ -94,23 +96,23 @@ stop      | Stops an installed system daemon
 uninstall | Uninstalls an installed system daemon.
 reset     | Reset the existing files database, tmp dir and log file. Obeys custom paths for all of those.
 
-Flag                | Possible Values | Required | Description
-----                | --------------- | -------- | -----------
---watch             | Valid, existing directory path | no | Pass a relative (resolved relative to cwd) or absolute path. Accepts a comma-delimited list of multiple watch paths
---destination       | Valid, existing directory path  | yes* | Pass a relative or absolute path
---video-destination | Valid, existing directory path  | yes* | (or a single destination above)
---audio-destination | Valid, existing directory path  | yes* | (or a single destination above)
---tmp               | Valid, existing directory path | no | Path to store temp conversion files. Defaults to ~/.arrivals/tmp
---db                | Valid, existing directory path | no | Path to store existing files db. Defaults to ~/.arrivals/db
---log-level         | `info`, `debug`, `error` | no | Logging level
---log-type          | `file`, `console` | no | How to log. Daemon defaults to console, which gets written in your Library/Logs folder. Command-line invocation default to a file in the ~/.arrivals directory
---ffmpeg            | path to ffmpeg bin | no | Defaults to `/usr/local/bin/ffmpeg`
---mkvextract        | path to mkvextract bin | no | Defaults to `/usr/local/bin/mkvextract`
---mkvinfo           | path to mkvinfo bin | no | Defaults to `/usr/local/bin/mkvinfo`
---mp4box            | path to mp4box bin | no | Defaults to `/usr/local/bin/mp4box`
---mkvtomp4          | path to mkvtomp4 bin | no | Defaults to `/usr/local/bin/mkvtomp4`
---run-as-root       | `true` | no | install the daemon as root, rather than current user
---cwd               | Valid path | no | Sets the cwd for all path resolution
+Flag              | Possible Values | Required | Description
+----              | --------------- | -------- | -----------
+watch             | Valid, existing directory path | no | Pass a relative (resolved relative to cwd) or absolute path. Accepts a comma-delimited list of multiple watch paths
+destination       | Valid, existing directory path  | yes* | Pass a relative or absolute path
+video-destination | Valid, existing directory path  | yes* | (or a single destination above)
+audio-destination | Valid, existing directory path  | yes* | (or a single destination above)
+tmp               | Valid, existing directory path | no | Path to store temp conversion files. Defaults to ~/.arrivals/tmp
+db                | Valid, existing directory path | no | Path to store existing files db. Defaults to ~/.arrivals/db
+log-level         | `info`, `debug`, `error` | no | Logging level
+log-type          | `file`, `console` | no | How to log. Daemon defaults to console, which gets written in your Library/Logs folder. Command-line invocation default to a file in the ~/.arrivals directory
+ffmpeg            | path to ffmpeg bin | no | Defaults to `/usr/local/bin/ffmpeg`
+mkvextract        | path to mkvextract bin | no | Defaults to `/usr/local/bin/mkvextract`
+mkvinfo           | path to mkvinfo bin | no | Defaults to `/usr/local/bin/mkvinfo`
+mp4box            | path to mp4box bin | no | Defaults to `/usr/local/bin/mp4box`
+mkvtomp4          | path to mkvtomp4 bin | no | Defaults to `/usr/local/bin/mkvtomp4`
+run-as-root       | `true` | no | install the daemon as root, rather than current user
+cwd               | Valid path | no | Sets the cwd for all path resolution
 
 ## How it works
 
