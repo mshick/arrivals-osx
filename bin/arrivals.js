@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var path = require('path');
+var fs = require('fs');
 var mkdirp = require('mkdirp');
 var untildify = require('untildify');
 var touch = require('touch');
@@ -60,6 +61,19 @@ if (ACTION === 'reset') {
     return;
 } else {
     prepareDirs();
+}
+
+if (argv.watch) {
+    argv.watch.split(',').forEach(function (p) {
+        var watchPath = path.resolve(CWD, p);
+        var watchPathStat;
+        try {
+            watchPathStat = fs.statSync(watchPath);
+        } catch(err) {
+            watchPathStat = null;
+        }
+        assert(watchPathStat && watchPathStat.isDirectory(), 'Watch path must exist and be a directory');
+    });
 }
 
 assert(argv.destination || (argv['video-destination'] && argv['audio-destination']), 'Destination is required');
