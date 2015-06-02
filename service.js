@@ -1,8 +1,12 @@
 var path = require('path');
 var Service = require('node-mac').Service;
 var bole = require('bole');
-var log = bole('service');
+var boleConsole = require('bole-console');
 
+
+var boleConsoleStream = boleConsole({ timestamp: false });
+bole.output({ level: 'info', stream: boleConsoleStream });
+var log = bole('service');
 
 function create(options) {
 
@@ -72,7 +76,7 @@ function create(options) {
         if (!service.exists) {
             log.info('Uninstalled');
         } else {
-            log.error('Service could not be uninstalled')
+            log.error('Service could not be uninstalled');
         }
     });
 
@@ -84,6 +88,18 @@ function create(options) {
         if (!service.exists) {
             log.info('Stopped');
         }
+    });
+
+    service.on('alreadyinstalled', function() {
+        log.info('Already installed');
+    });
+
+    service.on('invalidinstallation', function() {
+        log.info('Invalid installation');
+    });
+
+    service.on('error', function (err) {
+        log.error('Error', err);
     });
 
     return service;
