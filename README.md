@@ -15,6 +15,7 @@ formats that you'd like to play nice in an Apple ecosystem.
 * Converts `'flac', 'mp3', 'mp4', 'm4a', 'm4v', 'mkv', 'mov'` that are well-formed
   into ALAC/M4A, or M4V (with video passthrough, AAC safety track, original audio, and subtitles)
 * Easy usage
+* Status visibility through Finder tagging of source files
 
 ## Installaion
 
@@ -123,13 +124,10 @@ cwd               | Valid path | no | Sets the cwd for all path resolution
     - is proper extension
     - is not in existing paths db
 4. Push to work queue
-5. Tag with "pending" for Finder*
+5. Add a Yellow "pending" tag for Finder
 6. Do work, either mkvtomp4 or ffmpeg
-7. Tag with "finished" or "error" for Finder*
-
-> * Tagging is forthcoming
+7. Add a Green tag for "finished" or a Red tag for "error" in Finder
 
 ## TODO
 
-* add tagging in finder support
 * rewrite to not require mkvtomp4 (big job) and maybe use ffprobe
