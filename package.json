@@ -1,6 +1,6 @@
 {
   "name": "arrivals-osx",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "Watch a folder for audio and video arrivals and convert them to Apple-friendly formats.",
   "main": "./lib/arrivals.js",
   "scripts": {
@@ -41,7 +41,7 @@
     "glob": "^5.0.5",
     "hoek": "^2.13.0",
     "level-delete-stream": "0.0.1",
-    "level-jobs": "^0.5.0",
+    "level-jobs": "git://github.com/pgte/level-jobs.git",
     "level-promisify": "^2.0.0",
     "level-sublevel": "^6.4.6",
     "level-ws": "0.0.0",
