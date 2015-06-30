@@ -15,7 +15,8 @@ var defaults = {
     EXISTING: 'existing',
     COMPLETE: 'complete',
     IN_PROGRESS: 'in-progress',
-    UNHANDLED: 'unhandled'
+    UNHANDLED: 'unhandled',
+    ERROR: 'error'
   }
 };
 
