@@ -8,6 +8,8 @@ audio or video files for you then place them somewhere you choose. This only
 works with OSX and the primary use-case is incoming torrents in flac or mkv
 formats that you'd like to play nice in an Apple ecosystem.
 
+> Requires node.js 4.0.0 or greater!
+
 ## Features
 
 * Watch many directories
@@ -74,10 +76,11 @@ $ arrivals --watch=incoming --destination=converted --ffmpeg=/usr/local/bin/ffmp
 
 ### Required system libraries
 
+* node.js >= 4.0.0
 * ffmpeg (with libfdk_aac)
-* mkvextract
-* mp4box
-* mkvinfo
+* mkvextract (mkvtoolnix)
+* mp4box (gpac)
+* mkvinfo (mkvtoolnix)
 * mkvtomp4
 
 ## Full command list

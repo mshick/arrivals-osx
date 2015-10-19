@@ -1,12 +1,8 @@
 {
-    "env": {
-        "node": true,
-        "es6": true
-    },
-    "rules": {
-        "dot-notation": 0,
-        "quotes": [1, "single"],
-        "strict": [2, "never"],
-        "semi": [1, "always"]
-    }
+  "extends": "defaults/configurations/walmart/es6-node",
+  "rules": {
+    "strict": 0,
+    "prefer-spread": 0,
+    "max-statements": 0
+  }
 }
