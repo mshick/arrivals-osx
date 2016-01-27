@@ -5,6 +5,8 @@
 "use strict";
 
 const path = require("path");
+process.env.NODE_CONFIG_DIR = path.resolve(__dirname, "../config");
+
 const fs = require("fs");
 const mkdirp = require("mkdirp");
 const untildify = require("untildify");
