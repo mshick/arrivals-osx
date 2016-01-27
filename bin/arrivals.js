@@ -14,7 +14,7 @@ const argv = require("minimist")(process.argv.slice(2));
 const service = require("../service");
 const assert = require("hoek").assert;
 const arrivals = require("../lib/arrivals");
-const config = require("../config");
+const config = require("ez-config");
 
 let svc;
 
