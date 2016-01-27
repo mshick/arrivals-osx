@@ -36,7 +36,7 @@
     "co": "^4.6.0",
     "co-each": "^0.1.0",
     "del": "^2.2.0",
-    "ez-config": "^0.1.1",
+    "ez-config": "^0.2.1",
     "fluent-ffmpeg": "^2.0.1",
     "fsevents": "^1.0.6",
     "glob": "^6.0.4",

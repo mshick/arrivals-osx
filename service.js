@@ -19,10 +19,13 @@ const create = function (options) {
 
   const service = new Service({
     name: "arrivals",
-    description: "Arrivals-osx watch process.",
+    description: "arrivals-osx watch process",
     runAsUserAgent: options.runAsUserAgent,
     script: path.resolve(__dirname, "index.js"),
     env: [{
+      name: "NODE_CONFIG_DIR",
+      value: path.resolve(__dirname, "config")
+    }, {
       name: "CWD",
       value: process.env.CWD
     }, {
