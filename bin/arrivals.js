@@ -105,7 +105,7 @@ process.env.LOG_LEVEL = argv["log-level"] || "info";
 
 process.env.FFMPEG_PATH = argv.ffmpeg || "/usr/local/bin/ffmpeg";
 process.env.MKVTOMP4_PATH = argv.mkvtomp4 || "/usr/local/bin/mkvtomp4";
-process.env.MP4BOX_PATH = argv.mp4box || "/usr/local/bin/mp4box";
+process.env.MP4BOX_PATH = argv.mp4box || "/usr/local/bin/MP4Box";
 process.env.MKVINFO_PATH = argv.mkvinfo || "/usr/local/bin/mkvinfo";
 process.env.MKVEXTRACT_PATH = argv.mkvextract || "/usr/local/bin/mkvextract";
 
