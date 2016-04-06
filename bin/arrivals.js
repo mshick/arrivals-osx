@@ -110,13 +110,13 @@ process.env.MKVINFO_PATH = argv.mkvinfo || "/usr/local/bin/mkvinfo";
 process.env.MKVEXTRACT_PATH = argv.mkvextract || "/usr/local/bin/mkvextract";
 
 process.env.VIDEO_COPY_EXTENSIONS = argv["video-copy-extensions"]
-  || config.get("copyVideoExtensions");
+  || config.get("copyVideoExtensions").join(",");
 process.env.VIDEO_CONVERT_EXTENSIONS = argv["video-convert-extensions"]
-  || config.get("convertVideoExtensions");
+  || config.get("convertVideoExtensions").join(",");
 process.env.AUDIO_COPY_EXTENSIONS = argv["audio-copy-extensions"]
-  || config.get("copyAudioExtensions");
+  || config.get("copyAudioExtensions").join(",");
 process.env.AUDIO_CONVERT_EXTENSIONS = argv["audio-convert-extensions"]
-  || config.get("convertAudioExtensions");
+  || config.get("convertAudioExtensions").join(",");
 
 if (ACTION === "run") {
   arrivals();
