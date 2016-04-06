@@ -109,6 +109,14 @@ process.env.MP4BOX_PATH = argv.mp4box || "/usr/local/bin/MP4Box";
 process.env.MKVINFO_PATH = argv.mkvinfo || "/usr/local/bin/mkvinfo";
 process.env.MKVEXTRACT_PATH = argv.mkvextract || "/usr/local/bin/mkvextract";
 
+process.env.VIDEO_COPY_EXTENSIONS = argv["video-copy-extensions"]
+  || config.get("copyVideoExtensions");
+process.env.VIDEO_CONVERT_EXTENSIONS = argv["video-convert-extensions"]
+  || config.get("convertVideoExtensions");
+process.env.AUDIO_COPY_EXTENSIONS = argv["audio-copy-extensions"]
+  || config.get("copyAudioExtensions");
+process.env.AUDIO_CONVERT_EXTENSIONS = argv["audio-convert-extensions"]
+  || config.get("convertAudioExtensions");
 
 if (ACTION === "run") {
   arrivals();

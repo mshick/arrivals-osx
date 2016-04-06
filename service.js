@@ -50,8 +50,20 @@ const create = function (options) {
       name: "VIDEO_DESTINATION",
       value: process.env.VIDEO_DESTINATION
     }, {
+      name: "VIDEO_COPY_EXTENSIONS",
+      value: process.env.VIDEO_COPY_EXTENSIONS
+    }, {
+      name: "VIDEO_CONVERT_EXTENSIONS",
+      value: process.env.VIDEO_CONVERT_EXTENSIONS
+    }, {
       name: "AUDIO_DESTINATION",
       value: process.env.AUDIO_DESTINATION
+    }, {
+      name: "AUDIO_COPY_EXTENSIONS",
+      value: process.env.AUDIO_COPY_EXTENSIONS
+    }, {
+      name: "AUDIO_CONVERT_EXTENSIONS",
+      value: process.env.AUDIO_CONVERT_EXTENSIONS
     }, {
       name: "FFMPEG_PATH",
       value: process.env.FFMPEG_PATH
