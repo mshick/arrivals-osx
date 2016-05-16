@@ -109,14 +109,33 @@ process.env.MP4BOX_PATH = argv.mp4box || "/usr/local/bin/MP4Box";
 process.env.MKVINFO_PATH = argv.mkvinfo || "/usr/local/bin/mkvinfo";
 process.env.MKVEXTRACT_PATH = argv.mkvextract || "/usr/local/bin/mkvextract";
 
-process.env.VIDEO_COPY_EXTENSIONS = argv["video-copy-extensions"]
-  || config.get("copyVideoExtensions").join(",");
-process.env.VIDEO_CONVERT_EXTENSIONS = argv["video-convert-extensions"]
-  || config.get("convertVideoExtensions").join(",");
-process.env.AUDIO_COPY_EXTENSIONS = argv["audio-copy-extensions"]
-  || config.get("copyAudioExtensions").join(",");
-process.env.AUDIO_CONVERT_EXTENSIONS = argv["audio-convert-extensions"]
-  || config.get("convertAudioExtensions").join(",");
+if (argv["video-copy-extensions"]) {
+  process.env.VIDEO_COPY_EXTENSIONS = argv["video-copy-extensions"] === "NULL" ?
+    "" : argv["video-copy-extensions"];
+} else {
+  process.env.VIDEO_COPY_EXTENSIONS = config.get("copyVideoExtensions").join(",");
+}
+
+if (argv["video-convert-extensions"]) {
+  process.env.VIDEO_CONVERT_EXTENSIONS = argv["video-convert-extensions"] === "NULL" ?
+    "" : argv["video-convert-extensions"];
+} else {
+  process.env.VIDEO_CONVERT_EXTENSIONS = config.get("convertVideoExtensions").join(",");
+}
+
+if (argv["audio-copy-extensions"]) {
+  process.env.AUDIO_COPY_EXTENSIONS = argv["audio-copy-extensions"] === "NULL" ?
+    "" : argv["audio-copy-extensions"];
+} else {
+  process.env.AUDIO_COPY_EXTENSIONS = config.get("copyAudioExtensions").join(",");
+}
+
+if (argv["audio-convert-extensions"]) {
+  process.env.AUDIO_CONVERT_EXTENSIONS = argv["audio-convert-extensions"] === "NULL" ?
+    "" : argv["audio-convert-extensions"];
+} else {
+  process.env.AUDIO_CONVERT_EXTENSIONS = config.get("convertAudioExtensions").join(",");
+}
 
 if (ACTION === "run") {
   arrivals();
