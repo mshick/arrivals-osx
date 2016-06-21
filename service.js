@@ -21,6 +21,7 @@ const create = function (options) {
     name: "arrivals",
     description: "arrivals-osx watch process",
     runAsUserAgent: options.runAsUserAgent,
+    cwd: path.resolve(__dirname),
     script: path.resolve(__dirname, "index.js"),
     env: [{
       name: "NODE_CONFIG_DIR",
