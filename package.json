@@ -38,7 +38,7 @@
     "del": "^2.2.0",
     "ez-config": "^0.2.1",
     "fluent-ffmpeg": "^2.0.1",
-    "fsevents": "^1.0.6",
+    "fsevents": "^1.0.12",
     "glob": "^6.0.4",
     "hoek": "^3.0.4",
     "level-delete-stream": "0.0.1",
