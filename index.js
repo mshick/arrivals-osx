@@ -1,1 +1,1 @@
-require("./lib/arrivals")();
+require('./lib/arrivals')();

@@ -1,35 +1,30 @@
 #!/usr/bin/env node
 
-/* eslint no-process-exit:0 */
+const path = require('path');
 
-"use strict";
+process.env.NODE_CONFIG_DIR = path.resolve(__dirname, '../config');
 
-const path = require("path");
-
-process.env.NODE_CONFIG_DIR = path.resolve(__dirname, "../config");
-
-const fs = require("fs");
-const mkdirp = require("mkdirp");
-const untildify = require("untildify");
-const touch = require("touch");
-const del = require("del");
-const argv = require("minimist")(process.argv.slice(2));
-const service = require("../service");
-const assert = require("hoek").assert;
-const arrivals = require("../lib/arrivals");
-const config = require("ez-config");
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const untildify = require('untildify');
+const touch = require('touch');
+const del = require('del');
+const argv = require('minimist')(process.argv.slice(2));
+const service = require('../service');
+const assert = require('hoek').assert;
+const arrivals = require('../lib/arrivals');
+const config = require('ez-config');
 
 let svc;
 
-const ACTION = argv._[0] || "run";
-const RUN_AS_ROOT = argv["run-as-root"] || false;
+const ACTION = argv._[0] || 'run';
+const RUN_AS_ROOT = argv['run-as-root'] || false;
 const CWD = argv.cwd || process.cwd();
-const HOME_DIR = untildify("~/");
-const BASE_DIR = config.get("baseDir");
+const HOME_DIR = untildify('~/');
+const BASE_DIR = config.get('baseDir');
 
-
-if (ACTION === "uninstall" || ACTION === "restart" || ACTION === "stop") {
-  svc = service.create({ runAsUserAgent: !RUN_AS_ROOT });
+if (ACTION === 'uninstall' || ACTION === 'restart' || ACTION === 'stop') {
+  svc = service.create({runAsUserAgent: !RUN_AS_ROOT});
   svc[ACTION]();
   process.exit();
 }
@@ -62,11 +57,11 @@ const setEnvPath = function (key, val, defaultVal) {
   }
 };
 
-setEnvPath("TMP_PATH", argv.tmp, config.get("tmpDir"));
-setEnvPath("DB_PATH", argv.db, config.get("dbDir"));
-setEnvPath("LOG_FILE", argv.log, config.get("logFile"));
+setEnvPath('TMP_PATH', argv.tmp, config.get('tmpDir'));
+setEnvPath('DB_PATH', argv.db, config.get('dbDir'));
+setEnvPath('LOG_FILE', argv.log, config.get('logFile'));
 
-if (ACTION === "reset") {
+if (ACTION === 'reset') {
   prepareDirs(true);
   process.exit();
 } else {
@@ -74,7 +69,7 @@ if (ACTION === "reset") {
 }
 
 if (argv.watch) {
-  argv.watch.split(",").forEach((p) => {
+  argv.watch.split(',').forEach(p => {
     const watchPath = path.resolve(CWD, p);
     let watchPathStat;
     try {
@@ -82,64 +77,62 @@ if (argv.watch) {
     } catch (err) {
       watchPathStat = null;
     }
-    assert(watchPathStat && watchPathStat.isDirectory(),
-        "Watch path must exist and be a directory");
+    assert(watchPathStat && watchPathStat.isDirectory(), 'Watch path must exist and be a directory');
   });
 }
 
-assert(argv.destination || argv["video-destination"] && argv["audio-destination"],
-    "Destination is required");
+assert(argv.destination || (argv['video-destination'] && argv['audio-destination']), 'Destination is required');
 
-setEnvPath("VIDEO_DESTINATION", argv["video-destination"] || argv.destination);
-setEnvPath("AUDIO_DESTINATION", argv["audio-destination"] || argv.destination);
+setEnvPath('VIDEO_DESTINATION', argv['video-destination'] || argv.destination);
+setEnvPath('AUDIO_DESTINATION', argv['audio-destination'] || argv.destination);
 
-if (argv["log-type"]) {
-  process.env.LOG_TYPE = argv["log-type"];
+if (argv['log-type']) {
+  process.env.LOG_TYPE = argv['log-type'];
 } else {
-  process.env.LOG_TYPE = ACTION === "run" ? "file" : "console";
+  process.env.LOG_TYPE = ACTION === 'run' ? 'file' : 'console';
 }
 
 process.env.CWD = CWD;
 process.env.WATCH_PATH = argv.watch;
-process.env.LOG_LEVEL = argv["log-level"] || "info";
+process.env.LOG_LEVEL = argv['log-level'] || 'debug';
 
-process.env.FFMPEG_PATH = argv.ffmpeg || "/usr/local/bin/ffmpeg";
-process.env.MKVTOMP4_PATH = argv.mkvtomp4 || "/usr/local/bin/mkvtomp4";
-process.env.MP4BOX_PATH = argv.mp4box || "/usr/local/bin/MP4Box";
-process.env.MKVINFO_PATH = argv.mkvinfo || "/usr/local/bin/mkvinfo";
-process.env.MKVEXTRACT_PATH = argv.mkvextract || "/usr/local/bin/mkvextract";
+process.env.FFMPEG_PATH = argv.ffmpeg || '/usr/local/bin/ffmpeg';
+process.env.MKVTOMP4_PATH = argv.mkvtomp4 || '/usr/local/bin/mkvtomp4';
+process.env.MP4BOX_PATH = argv.mp4box || '/usr/local/bin/MP4Box';
+process.env.MKVINFO_PATH = argv.mkvinfo || '/usr/local/bin/mkvinfo';
+process.env.MKVEXTRACT_PATH = argv.mkvextract || '/usr/local/bin/mkvextract';
 
-if (argv["video-copy-extensions"]) {
-  process.env.VIDEO_COPY_EXTENSIONS = argv["video-copy-extensions"] === "NULL" ?
-    "" : argv["video-copy-extensions"];
+if (argv['video-copy-extensions']) {
+  process.env.VIDEO_COPY_EXTENSIONS = argv['video-copy-extensions'] === 'NULL' ?
+    '' : argv['video-copy-extensions'];
 } else {
-  process.env.VIDEO_COPY_EXTENSIONS = config.get("copyVideoExtensions").join(",");
+  process.env.VIDEO_COPY_EXTENSIONS = config.get('copyVideoExtensions').join(',');
 }
 
-if (argv["video-convert-extensions"]) {
-  process.env.VIDEO_CONVERT_EXTENSIONS = argv["video-convert-extensions"] === "NULL" ?
-    "" : argv["video-convert-extensions"];
+if (argv['video-convert-extensions']) {
+  process.env.VIDEO_CONVERT_EXTENSIONS = argv['video-convert-extensions'] === 'NULL' ?
+    '' : argv['video-convert-extensions'];
 } else {
-  process.env.VIDEO_CONVERT_EXTENSIONS = config.get("convertVideoExtensions").join(",");
+  process.env.VIDEO_CONVERT_EXTENSIONS = config.get('convertVideoExtensions').join(',');
 }
 
-if (argv["audio-copy-extensions"]) {
-  process.env.AUDIO_COPY_EXTENSIONS = argv["audio-copy-extensions"] === "NULL" ?
-    "" : argv["audio-copy-extensions"];
+if (argv['audio-copy-extensions']) {
+  process.env.AUDIO_COPY_EXTENSIONS = argv['audio-copy-extensions'] === 'NULL' ?
+    '' : argv['audio-copy-extensions'];
 } else {
-  process.env.AUDIO_COPY_EXTENSIONS = config.get("copyAudioExtensions").join(",");
+  process.env.AUDIO_COPY_EXTENSIONS = config.get('copyAudioExtensions').join(',');
 }
 
-if (argv["audio-convert-extensions"]) {
-  process.env.AUDIO_CONVERT_EXTENSIONS = argv["audio-convert-extensions"] === "NULL" ?
-    "" : argv["audio-convert-extensions"];
+if (argv['audio-convert-extensions']) {
+  process.env.AUDIO_CONVERT_EXTENSIONS = argv['audio-convert-extensions'] === 'NULL' ?
+    '' : argv['audio-convert-extensions'];
 } else {
-  process.env.AUDIO_CONVERT_EXTENSIONS = config.get("convertAudioExtensions").join(",");
+  process.env.AUDIO_CONVERT_EXTENSIONS = config.get('convertAudioExtensions').join(',');
 }
 
-if (ACTION === "run") {
+if (ACTION === 'run') {
   arrivals();
-} else if (ACTION === "install") {
+} else if (ACTION === 'install') {
   svc = service.create({
     runAsUserAgent: !RUN_AS_ROOT
   });
