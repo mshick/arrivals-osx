@@ -94,7 +94,7 @@ if (argv['log-type']) {
 
 process.env.CWD = CWD;
 process.env.WATCH_PATH = argv.watch;
-process.env.LOG_LEVEL = argv['log-level'] || 'debug';
+process.env.LOG_LEVEL = argv['log-level'] || 'info';
 
 process.env.FFMPEG_PATH = argv.ffmpeg || '/usr/local/bin/ffmpeg';
 process.env.MKVTOMP4_PATH = argv.mkvtomp4 || '/usr/local/bin/mkvtomp4';
