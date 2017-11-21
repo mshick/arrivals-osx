@@ -24,7 +24,7 @@ const HOME_DIR = untildify('~/');
 const BASE_DIR = config.get('baseDir');
 
 if (ACTION === 'uninstall' || ACTION === 'restart' || ACTION === 'stop') {
-  svc = service.create({runAsUserAgent: !RUN_AS_ROOT});
+  svc = service.create({runAsAgent: !RUN_AS_ROOT});
   svc[ACTION]();
   process.exit();
 }

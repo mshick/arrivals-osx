@@ -12,13 +12,11 @@ bole.output({
 
 const log = bole('service');
 
-const create = function (options) {
-  options = options || {};
-
+const create = (options = {}) => {
   const service = new Service({
     name: 'com.mshick.arrivals',
     description: 'arrivals-osx watch process',
-    runAsUserAgent: options.runAsUserAgent,
+    runAsAgent: options.runAsAgent,
     cwd: path.resolve(__dirname),
     script: path.resolve(__dirname, 'index.js'),
     env: [{
