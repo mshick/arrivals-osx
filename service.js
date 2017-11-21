@@ -17,6 +17,7 @@ const create = (options = {}) => {
     name: 'com.mshick.arrivals',
     description: 'arrivals-osx watch process',
     runAsUserAgent: options.runAsUserAgent,
+    logpath: process.env.HOME + '/Library/Logs/com.mshick.arrivals',
     cwd: path.resolve(__dirname),
     script: path.resolve(__dirname, 'index.js'),
     env: [{
