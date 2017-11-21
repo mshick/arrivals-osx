@@ -1,6 +1,6 @@
 {
   "name": "arrivals-osx",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "description": "Watch a folder for audio and video arrivals and convert them to Apple-friendly formats.",
   "main": "./lib/arrivals.js",
   "scripts": {
