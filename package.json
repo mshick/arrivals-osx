@@ -51,7 +51,7 @@
     "minimatch": "^3.0.3",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
-    "node-mac": "^0.1.8",
+    "node-mac": "https://github.com/mshick/node-mac",
     "touch": "^3.1.0",
     "untildify": "^3.0.2"
   },

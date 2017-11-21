@@ -16,7 +16,7 @@ const create = (options = {}) => {
   const service = new Service({
     name: 'com.mshick.arrivals',
     description: 'arrivals-osx watch process',
-    runAsAgent: options.runAsAgent,
+    runAsUserAgent: options.runAsUserAgent,
     cwd: path.resolve(__dirname),
     script: path.resolve(__dirname, 'index.js'),
     env: [{
