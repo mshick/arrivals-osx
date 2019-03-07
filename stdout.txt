@@ -1,0 +1,61 @@
+2019-03-06 19:27:56 DEBUG: Starting...
+2019-03-06 19:27:56 DEBUG: cwd: /Users/mshick/Code/arrivals-osx-2
+2019-03-06 19:27:56 DEBUG: Video destination: ./fixtures/videoDestination
+2019-03-06 19:27:56 DEBUG: Audio destination: ./fixtures/audioDestination
+2019-03-06 19:27:56 INFO: Starting dispatcher ...
+2019-03-06 19:27:56 INFO: 0 existing paths added
+2019-03-06 19:27:56 INFO: Dispatcher started!
+2019-03-06 19:27:56 DEBUG: Database created
+2019-03-06 19:27:56 DEBUG: Watching paths: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder
+2019-03-06 19:27:56 INFO: Starting watcher
+2019-03-06 19:27:56 INFO: Arrivals has started!
+2019-03-06 19:28:25 DEBUG: 
+==FileWatcher onAdd==
+FilePath: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/01. Introlude.flac
+Absolute File Path: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/01. Introlude.flac
+2019-03-06 19:28:25 DEBUG: 
+==FileWatcher onAdd==
+FilePath: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/02. Urban Jazz.flac
+Absolute File Path: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/02. Urban Jazz.flac
+2019-03-06 19:28:25 DEBUG: 
+==FileWatcher onAdd==
+FilePath: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/cover.jpg
+Absolute File Path: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/cover.jpg
+2019-03-06 19:28:25 DEBUG: 
+==FileWatcher onAdd==
+FilePath: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/.DS_Store
+Absolute File Path: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/.DS_Store
+2019-03-06 19:28:25 DEBUG: Skipping file: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/cover.jpg
+2019-03-06 19:28:25 DEBUG: Skipping file: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/.DS_Store
+2019-03-06 19:28:25 INFO: Taking file: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/01. Introlude.flac
+2019-03-06 19:28:25 DEBUG: Took /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/01. Introlude.flac 0
+2019-03-06 19:28:25 INFO: Taking file: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/02. Urban Jazz.flac
+2019-03-06 19:28:25 DEBUG: Took /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/02. Urban Jazz.flac 0
+2019-03-06 19:28:26 DEBUG: File enqueued with jobId: 1589164550417783
+2019-03-06 19:28:26 DEBUG: File enqueued with jobId: 1589164550419989
+2019-03-06 19:28:26 INFO: Starting work for /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/01. Introlude.flac
+2019-03-06 19:28:26 DEBUG: Work type: ConvertAudio
+2019-03-06 19:28:26 DEBUG: Converting audio file
+2019-03-06 19:28:26 DEBUG: /Users/mshick/Code/arrivals-osx-2/fixtures/tmpFolder/01. Introlude.m4a
+2019-03-06 19:28:26 DEBUG: Starting conversion of /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/01. Introlude.flac
+2019-03-06 19:28:26 DEBUG: ffmpeg command: ffmpeg -i /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/01. Introlude.flac -y -acodec alac -vn -map 0:0 -movflags +faststart /Users/mshick/Code/arrivals-osx-2/fixtures/tmpFolder/01. Introlude.m4a
+2019-03-06 19:28:26 DEBUG: 
+2019-03-06 19:28:26 DEBUG: 
+2019-03-06 19:28:26 DEBUG: 
+2019-03-06 19:28:26 DEBUG: 
+2019-03-06 19:28:27 DEBUG: 
+2019-03-06 19:28:27 INFO: Starting work for /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/02. Urban Jazz.flac
+2019-03-06 19:28:27 DEBUG: Work type: ConvertAudio
+2019-03-06 19:28:27 DEBUG: Converting audio file
+2019-03-06 19:28:27 DEBUG: /Users/mshick/Code/arrivals-osx-2/fixtures/tmpFolder/02. Urban Jazz.m4a
+2019-03-06 19:28:27 DEBUG: Starting conversion of /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/02. Urban Jazz.flac
+2019-03-06 19:28:27 DEBUG: ffmpeg command: ffmpeg -i /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/02. Urban Jazz.flac -y -acodec alac -vn -map 0:0 -movflags +faststart /Users/mshick/Code/arrivals-osx-2/fixtures/tmpFolder/02. Urban Jazz.m4a
+2019-03-06 19:28:27 DEBUG: Found cover art file: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/cover.jpg
+2019-03-06 19:28:27 DEBUG: embedCoverFile: /usr/local/bin/atomicparsley, /Users/mshick/Code/arrivals-osx-2/fixtures/tmpFolder/01. Introlude.m4a, cover=/Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/cover.jpg --overWrite, /Users/mshick/Code/arrivals-osx-2/fixtures/tmpFolder
+2019-03-06 19:28:27 DEBUG: 
+2019-03-06 19:28:27 DEBUG: 
+2019-03-06 19:28:27 DEBUG: Temporary audio file created: /Users/mshick/Code/arrivals-osx-2/fixtures/tmpFolder/01. Introlude.m4a
+2019-03-06 19:28:27 DEBUG: 
+2019-03-06 19:28:28 DEBUG: Found cover art file: /Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/cover.jpg
+2019-03-06 19:28:28 DEBUG: embedCoverFile: /usr/local/bin/atomicparsley, /Users/mshick/Code/arrivals-osx-2/fixtures/tmpFolder/02. Urban Jazz.m4a, cover=/Users/mshick/Code/arrivals-osx-2/fixtures/watchFolder/test-folder-100/cover.jpg --overWrite, /Users/mshick/Code/arrivals-osx-2/fixtures/tmpFolder
+2019-03-06 19:28:28 DEBUG: Temporary audio file created: /Users/mshick/Code/arrivals-osx-2/fixtures/tmpFolder/02. Urban Jazz.m4a
