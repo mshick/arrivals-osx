@@ -5,6 +5,7 @@ import { execPromise, expandPath, untildify } from './utils';
 export interface InquireAnswers {
   readonly ATOMICPARSLEY_PATH: string;
   readonly FFMPEG_PATH: string;
+  readonly FFPROBE_PATH: string;
   readonly WATCH_PATHS: string;
   readonly VIDEO_DESTINATION: string;
   readonly AUDIO_DESTINATION: string;
@@ -22,6 +23,7 @@ export async function inquire(): Promise<any> {
   const baseDir = '.arrivals';
   const { stdout: atomicparsley } = await execPromise('which atomicparsley');
   const { stdout: ffmpeg } = await execPromise('which ffmpeg');
+  const { stdout: ffprobe } = await execPromise('which ffprobe');
 
   const expandOptions = {
     baseDir,
@@ -96,6 +98,14 @@ export async function inquire(): Promise<any> {
       filter: (answer: string) => answer.trim(),
       message: 'Ffmpeg path:',
       name: 'FFMPEG_PATH',
+      type: 'input',
+      validate: (answer: string) => answer.length > 0
+    },
+    {
+      default: ffprobe.trim(),
+      filter: (answer: string) => answer.trim(),
+      message: 'Ffprobe path:',
+      name: 'FFPROBE_PATH',
       type: 'input',
       validate: (answer: string) => answer.length > 0
     },
