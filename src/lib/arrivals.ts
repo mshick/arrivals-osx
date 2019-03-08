@@ -11,6 +11,7 @@ import { createLogger, LoggerOptions } from './logger';
 
 import { createQueue } from './queue';
 import { CreateDbOptions } from './typings';
+import { buildDefaults } from './utils';
 import { createWorker, WorkerOptions } from './worker';
 
 export interface ArrivalsOptions {
@@ -22,14 +23,9 @@ export interface ArrivalsOptions {
   readonly copyVideoExtensions: string[];
   readonly cwd: string;
   readonly dbPath: string;
-  readonly ffmpegPath: string;
   readonly logLevel: string;
   readonly logType: string;
   readonly logFile: string;
-  readonly mkvextractPath: string;
-  readonly mkvinfoPath: string;
-  readonly mkvtomp4Path: string;
-  readonly mp4boxPath: string;
   readonly tmpPath: string;
   readonly videoDestination: string;
   readonly watchPaths: string[];
@@ -54,7 +50,9 @@ const mapWatchPaths = (cwd: string) => (p: string) => {
   return watchPath;
 };
 
-export async function watch(options: ArrivalsOptions): Promise<FSWatcher[]> {
+export async function watch(): Promise<FSWatcher[]> {
+  const options = buildDefaults();
+
   createLogger(options as LoggerOptions);
 
   const { cwd, watchPaths, videoDestination, audioDestination } = options;

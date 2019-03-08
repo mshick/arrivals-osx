@@ -12,7 +12,6 @@ import { Tag } from './tag';
 export interface WorkerOptions {
   readonly files: any;
   readonly tmpPath: string;
-  readonly ffmpegPath: string;
   readonly audioDestination: string;
   readonly videoDestination: string;
   readonly atomicparsleyPath: string;
