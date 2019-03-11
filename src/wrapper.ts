@@ -2,7 +2,6 @@
 import { fork } from 'child_process';
 import { createServer } from 'net';
 import path from 'path';
-import logger from 'winston';
 
 const script = path.resolve(__dirname, './run.js');
 const max = 60;
@@ -41,7 +40,7 @@ const monitor = () => {
       wait = wait * grow;
       attempts += 1;
       if (attempts > maxRetries && maxRetries >= 0) {
-        logger.error(
+        console.error(
           'Too many restarts. Arrivals will not be restarted because the maximum number of total restarts has been exceeded.'
         );
         process.exit();
@@ -71,11 +70,11 @@ const launch = () => {
 
   // When the child dies, attempt to restart based on configuration
   child.on('exit', (code: number) => {
-    logger.warn('Arrivals stopped running.');
+    console.error('Arrivals stopped running.');
 
     // If an error is thrown and the process is configured to exit, then kill the parent.
     if (code !== 0) {
-      logger.error('Arrivals exited with error code %s', code);
+      console.error(`Arrivals exited with error code ${code}`);
       process.exit();
       server.unref();
     }
