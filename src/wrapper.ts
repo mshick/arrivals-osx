@@ -69,11 +69,11 @@ const launch = () => {
   child = fork(script, [], { env: process.env });
 
   // When the child dies, attempt to restart based on configuration
-  child.on('exit', (code: number) => {
+  child.on('exit', (code: number | null) => {
     console.error('Arrivals stopped running.');
 
     // If an error is thrown and the process is configured to exit, then kill the parent.
-    if (code !== 0) {
+    if (code !== 0 && code !== null) {
       console.error(`Arrivals exited with error code ${code}`);
       process.exit();
       server.unref();

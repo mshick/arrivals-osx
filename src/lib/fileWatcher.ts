@@ -1,6 +1,6 @@
 // tslint:disable:no-submodule-imports
 import chokidar, { FSWatcher } from 'chokidar';
-import Future from 'fibers/future';
+// import Future from 'fibers/future';
 import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
@@ -56,8 +56,9 @@ export class FileWatcher {
         absFilePath
       );
 
-      const fileFuture = Future.fromPromise(this.handleFileEvent(absFilePath));
-      fileFuture.detach();
+      this.handleFileEvent(absFilePath);
+      // const fileFuture = Future.fromPromise(this.handleFileEvent(absFilePath));
+      // fileFuture.detach();
     } catch (err) {
       logger.error(err);
     }
