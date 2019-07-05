@@ -32,8 +32,7 @@ export class Worker {
     try {
       const { filepath, jobType } = payload;
 
-      // Consider testing if the file is open before starting work?
-      // lsof +D '/Volumes/SomeVolume' | grep "/Volumes/SomeVolume/SomeFile.mkv" > no output
+      // Test via the very slow lsof to see if this file is busy
       const isBusy = await isFileBusy(this.options.watchPaths[0], filepath);
 
       if (isBusy) {
