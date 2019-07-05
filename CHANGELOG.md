@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.3.1"></a>
+## [2.3.1](https://github.com/mshick/arrivals-osx/compare/v2.2.4...v2.3.1) (2019-07-05)
+
+
+
 <a name="2.2.5"></a>
 ## [2.2.5](https://github.com/mshick/arrivals-osx/compare/v2.2.2...v2.2.5) (2019-07-05)
 
