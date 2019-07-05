@@ -7,6 +7,7 @@ import path from 'path';
 import logger from 'winston';
 import { convertAudio } from './convertAudio';
 import { FileJobStatus, FileJobType } from './enums';
+import { isFileBusy } from './isFileBusy';
 import { Tag } from './tag';
 
 export interface WorkerOptions {
@@ -15,6 +16,7 @@ export interface WorkerOptions {
   readonly audioDestination: string;
   readonly videoDestination: string;
   readonly atomicparsleyPath: string;
+  readonly watchPaths: string[];
 }
 
 export class Worker {
@@ -29,6 +31,15 @@ export class Worker {
   public async handler(_: string, payload: any): Promise<void> {
     try {
       const { filepath, jobType } = payload;
+
+      // Consider testing if the file is open before starting work?
+      // lsof +D '/Volumes/SomeVolume' | grep "/Volumes/SomeVolume/SomeFile.mkv" > no output
+      const isBusy = await isFileBusy(this.options.watchPaths[0], filepath);
+
+      if (isBusy) {
+        logger.info('File %s is busy, deferring...', filepath);
+        return;
+      }
 
       logger.info('Starting work for %s', filepath);
 

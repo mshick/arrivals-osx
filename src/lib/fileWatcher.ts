@@ -8,7 +8,6 @@ import logger from 'winston';
 
 import { Dispatcher } from './dispatcher';
 import { FileJobType } from './enums';
-// import { sleep } from './utils';
 
 const lstat = promisify(fs.lstat);
 
@@ -80,10 +79,6 @@ export class FileWatcher {
     logger.info('Taking file: %s', filePath);
     const jobType = this.getJobType(filePath);
     logger.debug('Took %s %s', filePath, jobType);
-
-    // Give directories a chance to write cover files
-    // await sleep(1000);
-
     return this.dispatcher.enqueueFile(filePath, jobType);
   }
 
