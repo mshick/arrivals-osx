@@ -30,52 +30,57 @@ export class Worker {
   }
 
   public async handler(_: string, payload: any): Promise<void> {
+    const { filepath, jobType } = payload;
+
+    // Test via the very slow lsof to see if this file is busy
+    const isBusy = await isFileBusy(this.options.watchPaths[0], filepath);
+
+    if (isBusy) {
+      logger.info('File %s is busy, deferring...', filepath);
+      throw new Error('File busy');
+    }
+
+    logger.info('Starting work for %s', filepath);
+
+    const tag = new Tag(filepath);
+
+    const currentValue = await this.files.get(filepath);
+
     try {
-      const { filepath, jobType } = payload;
-
-      // Test via the very slow lsof to see if this file is busy
-      const isBusy = await isFileBusy(this.options.watchPaths[0], filepath);
-
-      if (isBusy) {
-        logger.info('File %s is busy, deferring...', filepath);
-        return;
-      }
-
-      logger.info('Starting work for %s', filepath);
-
-      const tag = new Tag(filepath);
-
-      const currentValue = await this.files.get(filepath);
       const { jobStatus } = currentValue;
 
       logger.debug('Work type: %s', FileJobType[jobType]);
 
-      try {
-        const handled =
-          jobStatus === FileJobStatus.Pending && existsSync(filepath)
-            ? this.handleFile(filepath, jobType) && true
-            : false;
+      const validStatus = Boolean(
+        jobStatus === FileJobStatus.Pending || jobStatus === FileJobStatus.Error
+      );
 
-        currentValue.jobStatus = handled
-          ? FileJobStatus.Complete
-          : FileJobStatus.Unhandled;
+      const fileExists = existsSync(filepath);
 
-        await tag.removeTag('Red');
-        await tag.removeTag('Yellow');
-        await tag.addTag('Green');
-      } catch (err) {
-        logger.error(err);
+      const handled =
+        validStatus && fileExists
+          ? await this.handleFile(filepath, jobType)
+          : false;
 
-        currentValue.jobStatus = FileJobStatus.Error;
+      currentValue.jobStatus = handled
+        ? FileJobStatus.Complete
+        : FileJobStatus.Unhandled;
 
-        await tag.removeTag('Green');
-        await tag.removeTag('Yellow');
-        await tag.addTag('Red');
-      } finally {
-        this.files.put(filepath, currentValue);
-      }
+      await tag.removeTag('Red');
+      await tag.removeTag('Yellow');
+      await tag.addTag('Green');
     } catch (err) {
       logger.error(err);
+
+      currentValue.jobStatus = FileJobStatus.Error;
+
+      await tag.removeTag('Green');
+      await tag.removeTag('Yellow');
+      await tag.addTag('Red');
+
+      throw err;
+    } finally {
+      this.files.put(filepath, currentValue);
     }
   }
 
@@ -92,62 +97,57 @@ export class Worker {
     const filename = path.basename(filepath);
     const dirname = path.dirname(filepath);
 
-    try {
-      switch (jobType) {
-        case FileJobType.ConvertAudio: {
-          logger.debug('Converting audio file');
+    switch (jobType) {
+      case FileJobType.ConvertAudio: {
+        logger.debug('Converting audio file');
 
-          const audioTmp = await convertAudio(filepath, tmpPath, {
-            atomicparsley
+        const audioTmp = await convertAudio(filepath, tmpPath, {
+          atomicparsley
+        });
+
+        logger.debug('Temporary audio file created: %s', audioTmp.audio);
+
+        const outFileName = path.basename(audioTmp.audio);
+
+        await copyFile(audioTmp.audio, `${audioDestination}/${outFileName}`);
+
+        delSync([audioTmp.audio], { force: true });
+
+        if (audioTmp.hadCoverFile) {
+          delSync([`${dirname}/*cover-resized-*.jpg`], {
+            force: true
           });
-
-          logger.debug('Temporary audio file created: %s', audioTmp.audio);
-
-          const outFileName = path.basename(audioTmp.audio);
-
-          await copyFile(audioTmp.audio, `${audioDestination}/${outFileName}`);
-
-          delSync([audioTmp.audio], { force: true });
-
-          if (audioTmp.hadCoverFile) {
-            delSync([`${dirname}/*cover-resized-*.jpg`], {
-              force: true
-            });
-          }
-
-          if (audioTmp.hadCoverFileEmbedded) {
-            delSync([audioTmp.cover, `${tmpPath}/*cover-resized-*.jpg`], {
-              force: true
-            });
-          }
-
-          return true;
         }
 
-        case FileJobType.ConvertVideo: {
-          logger.debug('Converting video file');
-          logger.info('VIDEO CONVERSION IS DISABLED');
-          return true;
+        if (audioTmp.hadCoverFileEmbedded) {
+          delSync([audioTmp.cover, `${tmpPath}/*cover-resized-*.jpg`], {
+            force: true
+          });
         }
 
-        case FileJobType.CopyAudio: {
-          logger.debug('Copying audio file');
-          await copyFile(filepath, `${audioDestination}/${filename}`);
-          return true;
-        }
-
-        case FileJobType.CopyVideo: {
-          logger.debug('Copying video file');
-          await copyFile(filepath, `${videoDestination}/${filename}`);
-          return true;
-        }
-
-        default:
-          return false;
+        return true;
       }
-    } catch (err) {
-      logger.error(err);
-      return false;
+
+      case FileJobType.ConvertVideo: {
+        logger.debug('Converting video file');
+        logger.info('VIDEO CONVERSION IS DISABLED');
+        return true;
+      }
+
+      case FileJobType.CopyAudio: {
+        logger.debug('Copying audio file');
+        await copyFile(filepath, `${audioDestination}/${filename}`);
+        return true;
+      }
+
+      case FileJobType.CopyVideo: {
+        logger.debug('Copying video file');
+        await copyFile(filepath, `${videoDestination}/${filename}`);
+        return true;
+      }
+
+      default:
+        return false;
     }
   }
 }
