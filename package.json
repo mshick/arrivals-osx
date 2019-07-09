@@ -1,6 +1,6 @@
 {
   "name": "arrivals-osx",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "description": "Watch a folder for audio and video arrivals and convert them to Apple-friendly formats.",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
