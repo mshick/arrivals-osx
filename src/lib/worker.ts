@@ -1,11 +1,12 @@
 // tslint:disable:no-object-mutation
 // tslint:disable:no-if-statement
 import { sync as delSync } from 'del';
-import { copyFileSync, existsSync } from 'fs';
+import { existsSync } from 'fs';
 import { LevelUp } from 'levelup';
 import path from 'path';
 import logger from 'winston';
 import { convertAudio } from './convertAudio';
+import { copyFile } from './copyFile';
 import { FileJobStatus, FileJobType } from './enums';
 import { isFileBusy } from './isFileBusy';
 import { Tag } from './tag';
@@ -104,7 +105,7 @@ export class Worker {
 
           const outFileName = path.basename(audioTmp.audio);
 
-          copyFileSync(audioTmp.audio, `${audioDestination}/${outFileName}`);
+          await copyFile(audioTmp.audio, `${audioDestination}/${outFileName}`);
 
           delSync([audioTmp.audio], { force: true });
 
@@ -131,13 +132,13 @@ export class Worker {
 
         case FileJobType.CopyAudio: {
           logger.debug('Copying audio file');
-          copyFileSync(filepath, `${audioDestination}/${filename}`);
+          await copyFile(filepath, `${audioDestination}/${filename}`);
           return true;
         }
 
         case FileJobType.CopyVideo: {
           logger.debug('Copying video file');
-          copyFileSync(filepath, `${videoDestination}/${filename}`);
+          await copyFile(filepath, `${videoDestination}/${filename}`);
           return true;
         }
 
