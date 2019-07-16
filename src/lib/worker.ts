@@ -77,8 +77,6 @@ export class Worker {
       await tag.removeTag('Green');
       await tag.removeTag('Yellow');
       await tag.addTag('Red');
-
-      throw err;
     } finally {
       this.files.put(filepath, currentValue);
     }
@@ -111,7 +109,9 @@ export class Worker {
 
         await copyFile(audioTmp.audio, `${audioDestination}/${outFileName}`);
 
-        delSync([audioTmp.audio], { force: true });
+        if (audioTmp.audio) {
+          delSync([audioTmp.audio], { force: true });
+        }
 
         if (audioTmp.hadCoverFile) {
           delSync([`${dirname}/*cover-resized-*.jpg`], {

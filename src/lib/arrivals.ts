@@ -33,12 +33,12 @@ export interface ArrivalsOptions {
 
 const queueOptions = {
   backoff: {
-    initialDelay: 10,
+    initialDelay: 100,
     maxDelay: 6000,
     randomisationFactor: 0
   },
   maxConcurrency: 1,
-  maxRetries: 25
+  maxRetries: 10
 };
 
 const fileDbOptions = {

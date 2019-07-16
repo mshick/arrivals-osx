@@ -23,19 +23,23 @@ export function createQueue(
   handler: LevelJobsHandlerPromise,
   options: LevelJobsOptions
 ): any {
-  const queue = new LevelJobs(db, queueHandlerShim(handler), options);
+  try {
+    const queue = new LevelJobs(db, queueHandlerShim(handler), options);
 
-  queue.pushPromise = async payload => {
-    return new Promise((resolve, reject) => {
-      try {
-        const jobId = queue.push(payload, err => {
-          err ? reject(err) : resolve(jobId);
-        });
-      } catch (err) {
-        reject(err);
-      }
-    });
-  };
+    queue.pushPromise = async payload => {
+      return new Promise((resolve, reject) => {
+        try {
+          const jobId = queue.push(payload, err => {
+            err ? reject(err) : resolve(jobId);
+          });
+        } catch (err) {
+          reject(err);
+        }
+      });
+    };
 
-  return queue;
+    return queue;
+  } catch (err) {
+    logger.error(err);
+  }
 }
