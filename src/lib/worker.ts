@@ -9,7 +9,6 @@ import { convertAudio } from './convertAudio';
 import { copyFile } from './copyFile';
 import { FileJobStatus, FileJobType } from './enums';
 import { isFileBusy } from './isFileBusy';
-import { Tag } from './tag';
 
 export interface WorkerOptions {
   readonly files: any;
@@ -42,7 +41,7 @@ export class Worker {
 
     logger.info('Starting work for %s', filepath);
 
-    const tag = new Tag(filepath);
+    // const tag = new Tag(filepath);
 
     const currentValue = await this.files.get(filepath);
 
@@ -66,17 +65,17 @@ export class Worker {
         ? FileJobStatus.Complete
         : FileJobStatus.Unhandled;
 
-      await tag.removeTag('Red');
-      await tag.removeTag('Yellow');
-      await tag.addTag('Green');
+      // await tag.removeTag('Red');
+      // await tag.removeTag('Yellow');
+      // await tag.addTag('Green');
     } catch (err) {
       logger.error(err);
 
       currentValue.jobStatus = FileJobStatus.Error;
 
-      await tag.removeTag('Green');
-      await tag.removeTag('Yellow');
-      await tag.addTag('Red');
+      // await tag.removeTag('Green');
+      // await tag.removeTag('Yellow');
+      // await tag.addTag('Red');
     } finally {
       this.files.put(filepath, currentValue);
     }
