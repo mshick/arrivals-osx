@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.4.8"></a>
+## [2.4.8](https://github.com/mshick/arrivals-osx/compare/v2.4.6...v2.4.8) (2019-10-19)
+
+
+
 <a name="2.4.7"></a>
 ## [2.4.7](https://github.com/mshick/arrivals-osx/compare/v2.4.5...v2.4.7) (2019-07-16)
 
