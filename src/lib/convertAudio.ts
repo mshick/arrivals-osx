@@ -82,7 +82,7 @@ const embedCoverFile = (
     cwd
   );
 
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     const atomicparsley = spawn(
       binPaths.atomicparsley,
       [outputAudio, `--artwork=${coverFile}`, '--overWrite'],
@@ -91,16 +91,18 @@ const embedCoverFile = (
 
     atomicparsley.stderr.on('data', data => log.debug(data.toString()));
 
-    atomicparsley.on('error', (err: Error) => reject(err));
+    atomicparsley.on('error', (err: Error) => {
+      log.debug(`atomicparsley error ${err.message}`);
+      resolve();
+    });
 
     atomicparsley.on('exit', (code: any, signal: any) => {
       if (signal) {
-        reject(new Error(`atomicparsley was killed with signal ${signal}`));
+        log.debug(`atomicparsley was killed with signal ${signal}`);
       } else if (code) {
-        reject(new Error(`atomicparsley exited with code ${code}`));
-      } else {
-        resolve();
+        log.debug(`atomicparsley exited with code ${code}`);
       }
+      resolve();
     });
   });
 };
