@@ -144,7 +144,9 @@ export function convertAudio(
           .then(() => {
             resolve({ audio: outputAudio, hadCoverFile: true });
           })
-          .catch(err => reject(err));
+          .catch(() => {
+            resolve({ audio: outputAudio, hadCoverFile: true });
+          });
       } else {
         resolve({
           audio: outputAudio,
