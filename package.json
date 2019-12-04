@@ -34,7 +34,7 @@
     "version": "standard-version",
     "reset": "git clean -dfx && git reset --hard && npm i",
     "clean": "trash build test",
-    "all": "run-s reset",
+    "all": "run-s reset build",
     "prepare-release": "run-s all version"
   },
   "scripts-info": {
