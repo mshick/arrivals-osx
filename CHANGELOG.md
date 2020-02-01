@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0](https://github.com/mshick/arrivals-osx/compare/v2.4.14...v2.6.0) (2020-02-01)
+
+
+### Features
+
+* remove ignoreInitial watcher option ([f4eddb0](https://github.com/mshick/arrivals-osx/commit/f4eddb061a7bc52d70b8e8e0346fee23486112ed))
+
 ### [2.4.14](https://github.com/mshick/arrivals-osx/compare/v2.4.13...v2.4.14) (2019-12-04)
 
 
