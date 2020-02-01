@@ -118,6 +118,7 @@ export async function inquire(): Promise<any> {
       validate: (answer: string) => answer.length > 0
     },
     {
+      // @ts-ignore
       choices: [
         { name: 'info', value: 'info' },
         { name: 'error', value: 'error' },
