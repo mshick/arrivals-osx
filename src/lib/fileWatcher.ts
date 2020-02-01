@@ -33,8 +33,8 @@ export class FileWatcher {
       awaitWriteFinish: {
         pollInterval: 500,
         stabilityThreshold: 60000
-      },
-      ignoreInitial: true
+      }
+      // ignoreInitial: true
     });
   }
 
