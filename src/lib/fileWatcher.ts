@@ -30,8 +30,7 @@ export class FileWatcher {
     this.fswatcher = chokidar.watch(options.watchPath, {
       awaitWriteFinish: {
         pollInterval: 500,
-        // stabilityThreshold: 60000,
-        stabilityThreshold: 10000,
+        stabilityThreshold: 60000,
       },
       // ignoreInitial: true
     })
