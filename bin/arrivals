@@ -6,4 +6,4 @@
  * (https://github.com/Microsoft/TypeScript/issues/16667), we track this file
  * with Git, and simply require the generated CLI.
  */
-require('../dist/cli')
+require('../lib/cli')

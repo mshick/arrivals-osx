@@ -2,7 +2,7 @@
   "name": "arrivals-osx",
   "version": "2.7.0",
   "description": "Watch a folder for audio and video arrivals and convert them to Apple-friendly formats.",
-  "main": "dist/lib/arrivals.js",
+  "main": "lib/lib/arrivals.js",
   "types": "lib/lib/arrivals.d.ts",
   "repository": "https://github.com/mshick/arrivals-osx",
   "license": "MIT",
@@ -16,7 +16,7 @@
     "arrivals": "./bin/arrivals"
   },
   "scripts": {
-    "build": "npm run clean && npm run compile && ncc build lib/cli/cli.js -o dist/cli && ncc build lib/lib/arrivals.js -o dist/lib",
+    "build": "npm run clean && npm run compile",
     "clean": "rm -rf lib dist *.tsbuildinfo",
     "compile": "tsc --build",
     "lint": "eslint . --ext .ts",
@@ -56,7 +56,6 @@
     "@types/sqlite3": "^3.1.6",
     "@typescript-eslint/eslint-plugin": "^3.4.0",
     "@typescript-eslint/parser": "^3.4.0",
-    "@zeit/ncc": "^0.22.3",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-import-resolver-typescript": "^2.0.0",
