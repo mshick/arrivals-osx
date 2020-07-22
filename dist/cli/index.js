@@ -5251,10 +5251,9 @@ const meow_1 = __importDefault(__webpack_require__(506));
 async function checkArgs() {
     const cli = meow_1.default(`
 	Usage
-    $ arrivals-osx [install|watch]
+    $ arrivals-osx install
   Commands
     install             Installs a plist and triggers launchctl
-    watch               Immediately invokes the arrivals watch function
     `, {
         flags: {},
     });

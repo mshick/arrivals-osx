@@ -11,3 +11,4 @@ coverage
 yarn.lock
 
 fixtures
+*.tsbuildinfo
