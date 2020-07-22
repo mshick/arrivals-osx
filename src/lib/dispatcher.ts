@@ -8,6 +8,7 @@ import { FileJobType } from './enums'
 import { Tag } from './tag'
 import { FileJobPayload } from './typings'
 import { prettyPrint } from './utils'
+import { rejects } from 'assert'
 
 const globPromise = promisify(glob)
 const FILES_TABLE_NAME = `files`
@@ -47,20 +48,29 @@ export class Dispatcher {
   }
 
   private async insertExistingFiles(filePaths: string[]): Promise<number> {
-    return new Promise(resolve => {
-      // const filePlaceholders = filePaths.map(() => `(?)`).join(`,`)
+    return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.run(`CREATE TABLE ${FILES_TABLE_NAME} (filepath TEXT PRIMARY KEY)`, () => {
-          this.db.parallelize(() => {
-            filePaths.forEach(filePath => {
-              this.db.run(`INSERT INTO ${FILES_TABLE_NAME} VALUES (?)`, filePath)
+        this.db.run(
+          `CREATE TABLE ${FILES_TABLE_NAME} (filepath TEXT PRIMARY KEY);`,
+          (err: any, res: any) => {
+            if (err) {
+              logger.error(`create table error`, err)
+              reject(err)
+              return
+            }
+
+            logger.debug(`create table result`, res)
+            this.db.parallelize(() => {
+              filePaths.forEach(filePath => {
+                this.db.run(`INSERT INTO ${FILES_TABLE_NAME} VALUES (?);`, filePath)
+              })
             })
-          })
-          // this.db.run(`INSERT INTO ${FILES_TABLE_NAME} VALUES ${filePlaceholders}`, filePaths)
-          this.db.all(`SELECT * FROM ${FILES_TABLE_NAME}`, (err, rows) => {
-            resolve(rows.length)
-          })
-        })
+            // this.db.run(`INSERT INTO ${FILES_TABLE_NAME} VALUES ${filePlaceholders}`, filePaths)
+            this.db.all(`SELECT * FROM ${FILES_TABLE_NAME};`, (err, rows) => {
+              resolve(rows.length)
+            })
+          }
+        )
       })
     })
   }
