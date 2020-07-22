@@ -2,10 +2,9 @@
 
 ![npm release](https://img.shields.io/npm/v/arrivals-osx.svg?style=flat)
 
-Arrivals will watch a directory and convert or copy a variety of incoming
-audio or video files for you then place them somewhere you choose. This only
-works with MacOS and the primary use-case is incoming torrents in flac or mkv
-formats that you'd like to play nice in an Apple ecosystem.
+Arrivals will watch a directory and convert or copy a variety of incoming audio or video files for
+you then place them somewhere you choose. This only works with MacOS and the primary use-case is
+incoming torrents in flac or mkv formats that you'd like to play nice in an Apple ecosystem.
 
 > Requires node.js 8.0.0 or greater!
 
@@ -13,8 +12,7 @@ formats that you'd like to play nice in an Apple ecosystem.
 
 - Watch many directories
 - Register as launchdaemon
-- Converts `'flac', 'mp3', 'mp4', 'm4a'` that are well-formed
-  into ALAC/M4A
+- Converts `'flac', 'mp3', 'mp4', 'm4a'` that are well-formed into ALAC/M4A
 - Can copy video & audio files to a destination directory
 - Easy usage
 - Status visibility through Finder tagging of source files
@@ -37,7 +35,6 @@ $ arrivals install
 
 - node.js >= 8.0.0
 - ffmpeg
-- ffprobe
 - atomicparsley
 
 ## Full command list

@@ -8,7 +8,6 @@ import { FileJobType } from './enums'
 import { Tag } from './tag'
 import { FileJobPayload } from './typings'
 import { prettyPrint } from './utils'
-import { rejects } from 'assert'
 
 const globPromise = promisify(glob)
 const FILES_TABLE_NAME = `files`
@@ -103,35 +102,32 @@ export class Dispatcher {
 
   public async enqueueFile(filepath: string, filetype: FileJobType): Promise<boolean> {
     return new Promise(resolve => {
-      const tag = new Tag(filepath)
-      const jobType = filetype
+      try {
+        const tag = new Tag(filepath)
+        const jobType = filetype
 
-      this.db.serialize(() => {
-        this.db.run(`INSERT INTO ${FILES_TABLE_NAME} VALUES (?)`, filepath, err => {
-          if (err) {
-            logger.error(`Error in enqueue\n%s`, prettyPrint(err as any))
-          }
+        this.db.serialize(() => {
+          this.db.run(`INSERT INTO ${FILES_TABLE_NAME} VALUES (?)`, filepath, err => {
+            if (err) {
+              logger.error(`Error in enqueue\n%s`, prettyPrint(err as any))
+            }
 
-          const fileJobPayload: FileJobPayload = {
-            filepath,
-            jobType,
-          }
+            const fileJobPayload: FileJobPayload = {
+              filepath,
+              jobType,
+            }
 
-          this.queue
-            .pushPromise(fileJobPayload)
-            .then(jobId => {
-              logger.debug(`File enqueued with jobId: %s`, jobId)
-              return tag.addTag(`Yellow`)
-            })
-            .then(() => {
-              resolve(true)
-            })
-            .catch(err => {
-              logger.error(`Error in enqueue\n%s`, prettyPrint(err))
-              resolve(false)
-            })
+            const ticket = this.queue.push(fileJobPayload)
+            logger.debug(`${filepath} enqueued with ticket:\n%s`, ticket)
+            tag.addTag(`Yellow`)
+
+            resolve(true)
+          })
         })
-      })
+      } catch (err) {
+        logger.error(`Error in enqueue\n%s`, prettyPrint(err))
+        resolve(false)
+      }
     })
   }
 }

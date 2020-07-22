@@ -1,5 +1,7 @@
 import Queue, { ProcessFunction, ProcessFunctionCb, Ticket } from 'better-queue'
 import logger from 'winston'
+// @ts-ignore
+import SqliteStore from './store'
 
 export interface TaskQueueOptions {
   readonly batchDelay: number
@@ -12,14 +14,9 @@ export type QueueHandlerPromise = (payload: any, worker: any) => Promise<void>
 
 function queueHandlerShim(handler: QueueHandlerPromise): ProcessFunction<any, any> {
   return function queueHandler(this: any, payload: any, done: ProcessFunctionCb<undefined>): void {
-    try {
-      handler(payload, this)
-        .then(() => done())
-        .catch((err: any) => done(err))
-    } catch (err) {
-      logger.error(err)
-      done(err)
-    }
+    handler(payload, this)
+      .then(() => done())
+      .catch((err: any) => done(err))
   }
 }
 
@@ -27,9 +24,7 @@ export class TaskQueue extends Queue {
   pushPromise(payload: any): Promise<Ticket> {
     return new Promise((resolve, reject) => {
       try {
-        const ticket = this.push(payload, err => {
-          err ? reject(err) : resolve(ticket)
-        })
+        resolve(this.push(payload))
       } catch (err) {
         reject(err)
       }
@@ -41,13 +36,16 @@ export function createQueue(handler: QueueHandlerPromise, options: TaskQueueOpti
   try {
     return new TaskQueue(queueHandlerShim(handler), {
       batchDelay: options.batchDelay,
+      batchSize: 1,
+      cancelIfRunning: true,
+      concurrent: 1,
+      id: `filepath`,
       maxRetries: options.maxRetries,
+      maxTimeout: 60000,
       retryDelay: options.retryDelay,
-      store: {
-        type: `sql`,
-        dialect: `sqlite`,
+      store: new SqliteStore({
         path: `${options.dbPath}/queue.sqlite`,
-      },
+      }),
     })
   } catch (err) {
     logger.error(err)

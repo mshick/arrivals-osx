@@ -4,6 +4,7 @@
     "moduleResolution": "Node",
     "target": "ES2018",
     "lib": ["ES2020"],
+    "allowJs": true,
     "composite": true,
     "declaration": true,
     "declarationMap": true,
@@ -21,6 +22,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
+    "baseUrl": "./src",
     "outDir": "./lib"
   },
   "exclude": ["./node_modules", "./**/*.test.ts", "./lib"]

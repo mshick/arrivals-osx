@@ -82,7 +82,7 @@ const embedCoverFile = (
       { cwd }
     )
 
-    atomicparsley.stderr.on(`data`, data => log.debug(data.toString()))
+    // atomicparsley.stderr.on(`data`, data => log.debug(data.toString()))
 
     atomicparsley.on(`error`, (err: Error) => {
       log.debug(`atomicparsley error ${err.message}`)
@@ -123,7 +123,7 @@ export function convertAudio(
   return new Promise((resolve, reject) => {
     let coverFileEmbedded: string
 
-    command.on(`start`, cmdline => log.debug(`ffmpeg command: %s`, cmdline))
+    command.on(`start`, cmdline => cmdline && log.debug(`ffmpeg command: %s`, cmdline.trim()))
     command.on(`error`, err => reject(err))
 
     command.on(`end`, () => {
