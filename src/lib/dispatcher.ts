@@ -50,15 +50,16 @@ export class Dispatcher {
     return new Promise(resolve => {
       // const filePlaceholders = filePaths.map(() => `(?)`).join(`,`)
       this.db.serialize(() => {
-        this.db.run(`CREATE TABLE ${FILES_TABLE_NAME} (filepath TEXT PRIMARY KEY)`)
-        this.db.parallelize(() => {
-          filePaths.forEach(filePath => {
-            this.db.run(`INSERT INTO ${FILES_TABLE_NAME} VALUES (?)`, filePath)
+        this.db.run(`CREATE TABLE ${FILES_TABLE_NAME} (filepath TEXT PRIMARY KEY)`, () => {
+          this.db.parallelize(() => {
+            filePaths.forEach(filePath => {
+              this.db.run(`INSERT INTO ${FILES_TABLE_NAME} VALUES (?)`, filePath)
+            })
           })
-        })
-        // this.db.run(`INSERT INTO ${FILES_TABLE_NAME} VALUES ${filePlaceholders}`, filePaths)
-        this.db.all(`SELECT * FROM ${FILES_TABLE_NAME}`, (err, rows) => {
-          resolve(rows.length)
+          // this.db.run(`INSERT INTO ${FILES_TABLE_NAME} VALUES ${filePlaceholders}`, filePaths)
+          this.db.all(`SELECT * FROM ${FILES_TABLE_NAME}`, (err, rows) => {
+            resolve(rows.length)
+          })
         })
       })
     })
