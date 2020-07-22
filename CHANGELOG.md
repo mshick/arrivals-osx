@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0](https://github.com/mshick/arrivals-osx/compare/v2.6.1...v2.7.0) (2020-07-22)
+
+
+### Features
+
+* major rewrite, different queueing database ([32100f4](https://github.com/mshick/arrivals-osx/commit/32100f46ddc366d41194dcecc9f9d6ebd8185809))
+
 ### [2.6.1](https://github.com/mshick/arrivals-osx/compare/v2.5.0...v2.6.1) (2020-02-01)
 
 ## [2.6.0](https://github.com/mshick/arrivals-osx/compare/v2.4.14...v2.6.0) (2020-02-01)
