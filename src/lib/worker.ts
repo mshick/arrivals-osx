@@ -58,13 +58,19 @@ export class Worker {
 
       logger.info(`Starting work for %s`, filepath)
       logger.debug(`Work type: %s`, FileJobType[jobType])
+    } catch (err) {
+      logger.error(err)
+      worker.failedBatch(FileJobStatus.Error)
+    }
 
+    try {
       const handled = existsSync(filepath) ? await this.handleFile(filepath, jobType) : false
       worker.finishBatch(handled ? FileJobStatus.Complete : FileJobStatus.Unhandled)
       await finalizeTagsSuccess(tag)
     } catch (err) {
       logger.error(err)
-      worker.failedBatch(FileJobStatus.Error)
+      // if the error is in the handler it likely won't resolve
+      worker.finishBatch(FileJobStatus.Error)
       await finalizeTagsFailure(tag)
     }
   }

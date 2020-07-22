@@ -42,7 +42,7 @@ export function buildDefaults(): ArrivalsOptions {
     tmpPath,
     videoDestination,
     watchPaths,
-    maxRetries: 99,
+    maxRetries: 25,
     retryDelay: 5000,
     batchDelay: 500,
   }
