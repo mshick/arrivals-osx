@@ -1,24 +1,15 @@
-import { execFile } from 'child_process';
-import { promisify } from 'util';
-import log from 'winston';
+import * as opened from '@ronomon/opened'
+import log from 'winston'
 
-const execFilePromise = promisify(execFile);
+export async function isFileBusy(source: string): Promise<boolean> {
+  return new Promise(resolve => {
+    opened.file(source, (err: any, busy: boolean) => {
+      if (err) {
+        log.debug(`Problem checking for busy file: %s`, err.message)
+        resolve(false)
+      }
 
-export async function isFileBusy(
-  directory: string,
-  source: string
-): Promise<boolean> {
-  try {
-    const { stdout } = await execFilePromise('/usr/sbin/lsof', [
-      '+D',
-      directory,
-      '|',
-      'grep',
-      source
-    ]);
-    return stdout ? true : false;
-  } catch (err) {
-    log.debug('Problem checking for busy file: %s', err.message);
-    return false;
-  }
+      resolve(busy)
+    })
+  })
 }

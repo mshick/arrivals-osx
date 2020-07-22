@@ -1,10 +1,10 @@
-import { execFile } from 'child_process';
+import { execFile } from 'child_process'
 
 export function copyFile(source: string, destination: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    const proc = execFile('/bin/cp', [source, destination]);
+    const proc = execFile(`/bin/cp`, [source, destination])
 
-    proc.on('error', reject);
-    proc.on('close', resolve);
-  });
+    proc.on(`error`, reject)
+    proc.on(`close`, resolve)
+  })
 }

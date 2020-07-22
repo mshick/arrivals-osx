@@ -3,7 +3,7 @@ export enum FileJobType {
   ConvertVideo,
   CopyAudio,
   CopyVideo,
-  Unknown
+  Unknown,
 }
 
 export enum FileJobStatus {
@@ -12,5 +12,5 @@ export enum FileJobStatus {
   Complete,
   InProgress,
   Unhandled,
-  Error
+  Error,
 }

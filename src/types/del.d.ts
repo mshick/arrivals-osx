@@ -1,5 +1,5 @@
 declare module 'del' {
-  import { IOptions as GlobOptions } from 'glob';
+  import { IOptions as GlobOptions } from 'glob'
 
   interface Options extends Readonly<GlobOptions> {
     /**
@@ -7,7 +7,7 @@ declare module 'del' {
      *
      * @default false
      */
-    readonly force?: boolean;
+    readonly force?: boolean
 
     /**
      * See what would be deleted.
@@ -24,14 +24,14 @@ declare module 'del' {
      *     console.log('Files and folders that would be deleted:\n', deletedPaths.join('\n'));
      * })();
      */
-    readonly dryRun?: boolean;
+    readonly dryRun?: boolean
 
     /**
      * Concurrency limit. Minimum: `1`.
      *
      * @default Infinity
      */
-    readonly concurrency?: number;
+    readonly concurrency?: number
   }
 
   /**
@@ -46,7 +46,7 @@ declare module 'del' {
   export default function del(
     patterns: string | ReadonlyArray<string>,
     options?: Options
-  ): Promise<string[]>;
+  ): Promise<string[]>
 
   /**
    * Synchronously delete files and folders using glob patterns.
@@ -57,8 +57,5 @@ declare module 'del' {
    * @param options - See the [`glob` options](https://github.com/isaacs/node-glob#options).
    * @returns An array of deleted paths.
    */
-  export function sync(
-    patterns: string | ReadonlyArray<string>,
-    options?: Options
-  ): string[];
+  export function sync(patterns: string | ReadonlyArray<string>, options?: Options): string[]
 }
