@@ -23,7 +23,7 @@ export async function inquire(): Promise<any> {
   const baseDir = `.arrivals`
   const { stdout: atomicparsley } = await execPromise(`which atomicparsley`)
   const { stdout: ffmpeg } = await execPromise(`which ffmpeg`)
-  const { stdout: ffprobe } = await execPromise(`which ffprobe`)
+  const { stdout: node } = await execPromise(`which node`)
 
   const expandOptions = {
     baseDir,
@@ -102,10 +102,10 @@ export async function inquire(): Promise<any> {
       validate: (answer: string) => answer.length > 0,
     },
     {
-      default: ffprobe.trim(),
+      default: node.trim(),
       filter: (answer: string) => answer.trim(),
-      message: `Ffprobe path:`,
-      name: `FFPROBE_PATH`,
+      message: `Node.js exec path:`,
+      name: `NODE_EXEC_PATH`,
       type: `input`,
       validate: (answer: string) => answer.length > 0,
     },

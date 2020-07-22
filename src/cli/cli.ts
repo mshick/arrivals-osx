@@ -22,9 +22,9 @@ import { Commands, execPromise, getIntro, touch, untildify } from './utils'
     const plistPath = untildify(`~/Library/LaunchAgents/${label}.plist`)
     const logPath = untildify(`~/Library/Logs/${label}`)
     const outLogPath = path.resolve(logPath, `arrivals.log`)
-    const errLogPath = path.resolve(logPath, `arrivals_error.log`)
-    const execPath = process.execPath
-    const scriptPath = `${rootPath}/lib/process.js`
+    const execPath = userOptions.NODE_EXEC_PATH
+    // Might need to switch back to process.js
+    const scriptPath = `${rootPath}/lib/run.js`
     const workingDirectory = path.resolve(__dirname, `../../../`)
 
     const tpl = {
@@ -33,7 +33,7 @@ import { Commands, execPromise, getIntro, touch, untildify } from './utils'
       Label: label,
       ProgramArguments: [execPath, scriptPath],
       RunAtLoad: true,
-      StandardErrorPath: errLogPath,
+      StandardErrorPath: outLogPath,
       StandardOutPath: outLogPath,
       WorkingDirectory: workingDirectory,
     }
@@ -42,7 +42,6 @@ import { Commands, execPromise, getIntro, touch, untildify } from './utils'
 
     mkdirp.sync(logPath)
     touch(outLogPath)
-    touch(errLogPath)
 
     writeFileSync(plistPath, plistData)
 
