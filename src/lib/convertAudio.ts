@@ -4,7 +4,7 @@ import fs from 'fs'
 import glob from 'glob'
 import path from 'path'
 import log from 'winston'
-import { BinPaths } from './typings'
+import { BinPaths } from './types'
 
 const checkVideoStream = (_: Error, metadata: FfprobeData): boolean => {
   if (!metadata || !metadata.streams) {

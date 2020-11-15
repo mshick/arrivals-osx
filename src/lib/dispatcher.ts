@@ -4,9 +4,8 @@ import { promisify } from 'util'
 import logger from 'winston'
 import { Database } from 'sqlite3'
 import { TaskQueue } from './taskQueue'
-import { FileJobType } from './enums'
 import { Tag } from './tag'
-import { FileJobPayload } from './typings'
+import { FileJobPayload, FileJobType } from './types'
 import { prettyPrint } from './utils'
 
 const globPromise = promisify(glob)
@@ -16,6 +15,7 @@ export interface DispatcherOptions {
   readonly filesDb: Database
   readonly queue: TaskQueue
   readonly watchPaths: string[]
+  readonly tagPath?: string
 }
 
 export class Dispatcher {
@@ -102,10 +102,15 @@ export class Dispatcher {
 
   public async enqueueFile(filepath: string, filetype: FileJobType): Promise<boolean> {
     return new Promise(resolve => {
-      try {
-        const tag = new Tag(filepath)
-        const jobType = filetype
+      let tag: Tag
 
+      if (this.options.tagPath) {
+        tag = new Tag(filepath, this.options.tagPath)
+      }
+
+      const jobType = filetype
+
+      try {
         this.db.serialize(() => {
           this.db.run(`INSERT INTO ${FILES_TABLE_NAME} VALUES (?)`, filepath, err => {
             if (err) {
@@ -119,7 +124,10 @@ export class Dispatcher {
 
             const ticket = this.queue.push(fileJobPayload)
             logger.debug(`${filepath} enqueued with ticket:\n%s`, ticket)
-            tag.addTag(`Yellow`)
+
+            if (tag) {
+              tag.addTag(`Yellow`)
+            }
 
             resolve(true)
           })

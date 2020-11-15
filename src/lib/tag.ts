@@ -6,16 +6,18 @@ const exec = promisify(child.exec)
 
 export class Tag {
   private filepath: string
+  private binPath: string
 
-  constructor(filepath: string) {
+  constructor(filepath: string, binPath: string) {
     this.filepath = filepath
+    this.binPath = binPath
   }
 
   public async addTag(tag: string): Promise<void> {
     const filepath = this.filepath
 
     try {
-      const cmd = [`tag`, `--add`, tag, filepath].join(` `)
+      const cmd = [this.binPath, `--add`, tag, filepath].join(` `)
 
       const result = await exec(cmd)
 
@@ -32,7 +34,7 @@ export class Tag {
     const filepath = this.filepath
 
     try {
-      const cmd = [`tag`, `--remove`, tag, filepath].join(` `)
+      const cmd = [this.binPath, `--remove`, tag, filepath].join(` `)
 
       const result = await exec(cmd)
 

@@ -12,6 +12,7 @@ import { buildDefaults } from './utils'
 import { createWorker, WorkerOptions } from './worker'
 
 export interface ArrivalsOptions {
+  readonly tagPath?: string
   readonly atomicparsleyPath: string
   readonly audioDestination: string
   readonly convertAudioExtensions: string[]

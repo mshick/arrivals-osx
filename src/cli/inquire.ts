@@ -3,6 +3,7 @@ import { prompt, Question } from 'inquirer'
 import { execPromise, expandPath, untildify } from './utils'
 
 export interface InquireAnswers {
+  readonly TAG_PATH: string
   readonly ATOMICPARSLEY_PATH: string
   readonly FFMPEG_PATH: string
   readonly FFPROBE_PATH: string
@@ -24,6 +25,7 @@ export async function inquire(): Promise<any> {
   const { stdout: atomicparsley } = await execPromise(`which atomicparsley`)
   const { stdout: ffmpeg } = await execPromise(`which ffmpeg`)
   const { stdout: node } = await execPromise(`which node`)
+  const { stdout: tag } = await execPromise(`which tag`)
 
   const expandOptions = {
     baseDir,
@@ -100,6 +102,13 @@ export async function inquire(): Promise<any> {
       name: `FFMPEG_PATH`,
       type: `input`,
       validate: (answer: string) => answer.length > 0,
+    },
+    {
+      default: tag.trim(),
+      filter: (answer: string) => answer.trim(),
+      message: `Tag path (optional):`,
+      name: `TAG_PATH`,
+      type: `input`,
     },
     {
       default: node.trim(),

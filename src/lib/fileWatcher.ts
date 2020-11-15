@@ -5,7 +5,7 @@ import { promisify } from 'util'
 import logger from 'winston'
 
 import { Dispatcher } from './dispatcher'
-import { FileJobType } from './enums'
+import { FileJobType } from './types'
 
 const lstat = promisify(fs.lstat)
 

@@ -2,9 +2,10 @@ import { sync as delSync } from 'del'
 import { existsSync } from 'fs'
 import path from 'path'
 import logger from 'winston'
+import { Worker as BetterQueueWorker } from 'better-queue'
 import { convertAudio } from './convertAudio'
 import { copyFile } from './copyFile'
-import { FileJobStatus, FileJobType } from './enums'
+import { FileJobStatus, FileJobType, FileJobPayload } from './types'
 import { isFileBusy } from './isFileBusy'
 import { Tag } from './tag'
 
@@ -13,6 +14,7 @@ export interface WorkerOptions {
   readonly audioDestination: string
   readonly videoDestination: string
   readonly atomicparsleyPath: string
+  readonly tagPath?: string
   readonly watchPaths: string[]
 }
 
@@ -44,9 +46,8 @@ export class Worker {
     this.options = options
   }
 
-  public async handler(payload: any, worker: any): Promise<void> {
+  public async handler(payload: FileJobPayload, worker: BetterQueueWorker): Promise<void> {
     const { filepath, jobType } = payload
-    const tag = new Tag(filepath)
 
     try {
       const isBusy = await isFileBusy(filepath)
@@ -63,15 +64,27 @@ export class Worker {
       worker.failedBatch(FileJobStatus.Error)
     }
 
+    let tag = null
+
+    if (this.options.tagPath) {
+      tag = new Tag(filepath, this.options.tagPath)
+    }
+
     try {
       const handled = existsSync(filepath) ? await this.handleFile(filepath, jobType) : false
       worker.finishBatch(handled ? FileJobStatus.Complete : FileJobStatus.Unhandled)
-      await finalizeTagsSuccess(tag)
+
+      if (tag) {
+        await finalizeTagsSuccess(tag)
+      }
     } catch (err) {
       logger.error(err)
       // if the error is in the handler it likely won't resolve
       worker.finishBatch(FileJobStatus.Error)
-      await finalizeTagsFailure(tag)
+
+      if (tag) {
+        await finalizeTagsFailure(tag)
+      }
     }
   }
 

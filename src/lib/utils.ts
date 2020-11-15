@@ -21,6 +21,7 @@ export function buildDefaults(): ArrivalsOptions {
     TMP_PATH: tmpPath = `./fixtures/tmpFolder`,
     WATCH_PATHS: watchPathsRaw = `./fixtures/watchFolder`,
     ATOMICPARSLEY_PATH: atomicparsleyPath = `/usr/local/bin/atomicparsley`,
+    TAG_PATH: tagPath,
   } = process.env
 
   const watchPathsArr = watchPathsRaw ? watchPathsRaw.split(`,`) : []
@@ -28,6 +29,7 @@ export function buildDefaults(): ArrivalsOptions {
   const watchPaths = watchPathsArr.map(watchPath => path.resolve(cwd, watchPath))
 
   const options: ArrivalsOptions = {
+    tagPath,
     atomicparsleyPath,
     audioDestination,
     convertAudioExtensions: convertAudioExtensions ? convertAudioExtensions.split(`,`) : [],
