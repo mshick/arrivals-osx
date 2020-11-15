@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.9.0](https://github.com/mshick/arrivals-osx/compare/v2.8.3...v2.9.0) (2020-11-15)
+
+
+### Features
+
+* documenting tag lib, properly bumping ([37e8d11](https://github.com/mshick/arrivals-osx/commit/37e8d11f73f1c41a9a7978faf05526197f07afe2))
+
 ### [2.8.3](https://github.com/mshick/arrivals-osx/compare/v2.8.2...v2.8.3) (2020-11-15)
 
 
