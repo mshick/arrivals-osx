@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.8.2](https://github.com/mshick/arrivals-osx/compare/v2.8.1...v2.8.2) (2020-11-15)
+
+
+### Bug Fixes
+
+* quote filepath got tagging ([282ef83](https://github.com/mshick/arrivals-osx/commit/282ef838e13c7c20de782736f6ec521756158faa))
+
 ### [2.8.1](https://github.com/mshick/arrivals-osx/compare/v2.8.0...v2.8.1) (2020-11-15)
 
 ## [2.8.0](https://github.com/mshick/arrivals-osx/compare/v2.6.2-0...v2.8.0) (2020-11-15)
