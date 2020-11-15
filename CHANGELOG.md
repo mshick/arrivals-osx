@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.8.3](https://github.com/mshick/arrivals-osx/compare/v2.8.2...v2.8.3) (2020-11-15)
+
+
+### Bug Fixes
+
+* temp covers not being deleted ([6536e67](https://github.com/mshick/arrivals-osx/commit/6536e67934661fd23f9b0c5aa308abd9edbc050b))
+
 ### [2.8.2](https://github.com/mshick/arrivals-osx/compare/v2.8.1...v2.8.2) (2020-11-15)
 
 
