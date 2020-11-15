@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.0](https://github.com/mshick/arrivals-osx/compare/v2.6.2-0...v2.8.0) (2020-11-15)
+
+
+### Features
+
+* cleanup on cli ([0aec9ae](https://github.com/mshick/arrivals-osx/commit/0aec9ae49e9c1402c62a0117873e33eac3657973))
+
+
+### Bug Fixes
+
+* cli path ([465eeda](https://github.com/mshick/arrivals-osx/commit/465eedacf2cc4f9bde340fb69fad432902cbf51d))
+* ncc no worky ([b58e6a3](https://github.com/mshick/arrivals-osx/commit/b58e6a353c0528fbc0410ebc0e7e83ea9fafbdf2))
+* retries ([1edaefc](https://github.com/mshick/arrivals-osx/commit/1edaefcc5b4e2de17a620564cdb2c04628f772c4))
+* sqlite table ([77e1dda](https://github.com/mshick/arrivals-osx/commit/77e1ddaa7c538f410c1c41569f7a98e7be8ea865))
+* sqlite table ([59f7d9b](https://github.com/mshick/arrivals-osx/commit/59f7d9bfffe7a388d812e9e3c129bc798671a1cf))
+* sqlite too many vars ([1bc6c61](https://github.com/mshick/arrivals-osx/commit/1bc6c616bb3b7de6fe1e50eabc54c3eb921fbf06))
+* store ([b6323e6](https://github.com/mshick/arrivals-osx/commit/b6323e616d17b41c0984e8672c6356ff9aad81e2))
+* up stability ([6164c97](https://github.com/mshick/arrivals-osx/commit/6164c9728849303e9ede447a93ae9882d3175edf))
+
 ## [2.7.0](https://github.com/mshick/arrivals-osx/compare/v2.6.1...v2.7.0) (2020-07-22)
 
 
