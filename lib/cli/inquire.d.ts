@@ -1,4 +1,5 @@
 export interface InquireAnswers {
+    readonly TAG_PATH: string;
     readonly ATOMICPARSLEY_PATH: string;
     readonly FFMPEG_PATH: string;
     readonly FFPROBE_PATH: string;

@@ -1,6 +1,7 @@
 export declare class Tag {
     private filepath;
-    constructor(filepath: string);
+    private binPath;
+    constructor(filepath: string, binPath: string);
     addTag(tag: string): Promise<void>;
     removeTag(tag: string): Promise<void>;
 }

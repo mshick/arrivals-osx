@@ -1,10 +1,11 @@
 import { Database } from 'sqlite3';
 import { TaskQueue } from './taskQueue';
-import { FileJobType } from './enums';
+import { FileJobType } from './types';
 export interface DispatcherOptions {
     readonly filesDb: Database;
     readonly queue: TaskQueue;
     readonly watchPaths: string[];
+    readonly tagPath?: string;
 }
 export declare class Dispatcher {
     private db;

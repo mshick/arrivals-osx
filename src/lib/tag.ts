@@ -17,7 +17,7 @@ export class Tag {
     const filepath = this.filepath
 
     try {
-      const cmd = [this.binPath, `--add`, tag, filepath].join(` `)
+      const cmd = [this.binPath, `--add`, `"${tag}"`, `"${filepath}"`].join(` `)
 
       const result = await exec(cmd)
 
@@ -34,7 +34,7 @@ export class Tag {
     const filepath = this.filepath
 
     try {
-      const cmd = [this.binPath, `--remove`, tag, filepath].join(` `)
+      const cmd = [this.binPath, `--remove`, `"${tag}"`, `"${filepath}"`].join(` `)
 
       const result = await exec(cmd)
 

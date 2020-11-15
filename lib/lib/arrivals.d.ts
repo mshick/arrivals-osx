@@ -1,5 +1,6 @@
 import { FSWatcher } from 'chokidar';
 export interface ArrivalsOptions {
+    readonly tagPath?: string;
     readonly atomicparsleyPath: string;
     readonly audioDestination: string;
     readonly convertAudioExtensions: string[];
