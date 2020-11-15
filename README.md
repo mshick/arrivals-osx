@@ -33,9 +33,10 @@ $ arrivals install
 
 ### Required system libraries
 
-- node.js >= 8.0.0
-- ffmpeg
-- atomicparsley
+- node.js >= 12.0.0
+- [ffmpeg](https://ffmpeg.org/) - `brew install ffmpeg`
+- [atomicparsley](https://github.com/wez/atomicparsley) - `brew install atomicparsley`
+- [tag](https://github.com/jdberry/tag/) - `brew install tag`
 
 ## Full command list
 
