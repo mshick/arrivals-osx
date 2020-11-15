@@ -21,6 +21,9 @@
     "compile": "tsc --build",
     "lint": "eslint . --ext .ts",
     "reset": "rm -rf node_modules dist package-lock.json",
+    "prerelease": "npm run build",
+    "release": "git add --all && git commit -am \"build: building release [skip ci]\" && npm run version",
+    "postrelease": "git push --follow-tags origin main && npm publish",
     "test": "jest",
     "version": "standard-version",
     "watch": "tsc --watch"
