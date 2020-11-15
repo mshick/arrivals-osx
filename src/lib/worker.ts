@@ -79,7 +79,7 @@ export class Worker {
       }
     } catch (err) {
       logger.error(err)
-      // if the error is in the handler it likely won't resolve
+      // If the error is in the handler it likely won't resolve
       worker.finishBatch(FileJobStatus.Error)
 
       if (tag) {
@@ -112,21 +112,20 @@ export class Worker {
 
         await copyFile(audioTmp.audio, `${audioDestination}/${outFileName}`)
 
-        if (audioTmp.audio) {
-          delSync([audioTmp.audio], { force: true })
+        const deleteFiles = [
+          `${dirname}/*cover-resized-*.jpg`,
+          `${tmpPath}/*cover-resized-*.jpg`,
+          audioTmp.audio,
+        ]
+
+        if (audioTmp.cover) {
+          deleteFiles.push(audioTmp.cover)
         }
 
-        if (audioTmp.hadCoverFile) {
-          delSync([`${dirname}/*cover-resized-*.jpg`], {
-            force: true,
-          })
-        }
-
-        if (audioTmp.hadCoverFileEmbedded) {
-          delSync([audioTmp.cover, `${tmpPath}/*cover-resized-*.jpg`], {
-            force: true,
-          })
-        }
+        // Clean up, we blindly delete temporary files...
+        delSync(deleteFiles, {
+          force: true,
+        })
 
         return true
       }
